@@ -1,0 +1,35 @@
+language: general
+
+services:
+  - docker
+
+branches:
+  only:
+    - master
+
+install:
+  - curl -sSL https://raw.githubusercontent.com/acidgenomics/Rcheck/master/install | bash
+
+jobs:
+  include:
+    - stage: test
+      name: "bioc-3.9"
+      script: tag="bioc-3.9" ./.Rcheck/docker
+    - stage: test
+      name: "bioc-devel"
+      script: tag="bioc-devel" ./.Rcheck/docker
+
+matrix:
+  allow_failures:
+    - name: "bioc-devel"
+  fast_finish: true
+
+after_failure:
+  - ./.Rcheck/docker-failure
+
+notifications:
+  email:
+    recipients:
+      - mike@steinbaugh.com
+    on_success: change
+    on_failure: change

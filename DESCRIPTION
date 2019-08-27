@@ -1,0 +1,46 @@
+Package: PANTHER
+Title: PANTHER
+Description: PANTHER database annotations.
+Version: 0.1.0
+Date: 2019-08-27
+Authors@R: c(
+    person(
+        "Michael", "Steinbaugh",
+        email = "mike@steinbaugh.com",
+        role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0002-2403-2221")
+    ),
+    person(
+        given = "Acid Genomics",
+        role = c("cph", "fnd")
+    ))
+URL:
+    https://panther.acidgenomics.com/,
+    https://github.com/acidgenomics/PANTHER/
+BugReports: https://github.com/acidgenomics/PANTHER/issues/
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 3.6)
+Imports:
+    basejump (>= 0.11.11),
+    goalie (>= 0.3.6),
+    BiocParallel (>= 1.18),
+    IRanges (>= 2.18),
+    S4Vectors (>= 0.22),
+    stringr (>= 1.4),
+    methods,
+    utils
+Suggests:
+    acidroxygen (>= 0.1),
+    BiocStyle (>= 2.12),
+    knitr (>= 1.22),
+    panther (>= 0.0.1),
+    testthat (>= 2.2)
+Remotes:
+    acidgenomics/basejump,
+    acidgenomics/goalie
+biocViews:
+    GenomeAnnotation
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
