@@ -21,7 +21,7 @@
 #'     organism = "Homo sapiens",
 #'     BPPARAM = BiocParallel::SerialParam()
 #' )
-#' summary(x)
+#' print(x)
 PANTHER <- function(  # nolint
     organism,
     release = NULL,

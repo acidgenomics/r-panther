@@ -51,5 +51,5 @@ x <- PANTHER(
     organism = "Homo sapiens",
     BPPARAM = BiocParallel::SerialParam()
 )
-summary(x)
+print(x)
 }
