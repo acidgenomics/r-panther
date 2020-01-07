@@ -3,6 +3,10 @@
 ### Minor changes
 
 - Documentation updates, using roxygen2 7.0 release.
+- Bug fix in transformer `mutateAll` required, for improved nested list column
+  handling following Bioconductor update. Added an internal `as_tibble()` call
+  prior to handoff to `DataFrame`, which improves return consistency for nested
+  list columns.
 
 ## PANTHER 0.1.0 (2019-09-25)
 
