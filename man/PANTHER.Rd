@@ -4,8 +4,11 @@
 \alias{PANTHER}
 \title{PANTHER database annotations}
 \usage{
-PANTHER(organism, release = NULL,
-  BPPARAM = BiocParallel::SerialParam(progressbar = TRUE))
+PANTHER(
+  organism,
+  release = NULL,
+  BPPARAM = BiocParallel::SerialParam(progressbar = TRUE)
+)
 }
 \arguments{
 \item{organism}{\code{character(1)}.
