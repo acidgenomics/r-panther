@@ -183,16 +183,14 @@ PANTHER <- function(  # nolint
 
 
 
-## This is CPU intensive, so calling BiocParallel here.
-## Updated 2019-08-27.
-.splitPANTHERTerms <- function(
-    x,
-    BPPARAM  # nolint
-) {
+## Updated 2020-01-09.
+.splitPANTHERTerms <- function(x, BPPARAM) {  # nolint
+    assert(is.atomic(x))
+    if (all(is.na(x))) return(x)
     bplapply(
         X = x,
         FUN = function(x) {
-            x <- as.character(x)
+            if (is.na(x)) return(NULL)
             x <- strsplit(x, split = ";")
             x <- unlist(x)
             x <- sort(unique(x))

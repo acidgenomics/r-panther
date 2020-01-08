@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.1.0
-Date: 2019-08-27
+Version: 0.1.1
+Date: 2020-01-08
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -22,18 +22,18 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.6)
 Imports:
-    basejump (>= 0.11.11),
-    goalie (>= 0.3.6),
-    BiocParallel (>= 1.18),
-    IRanges (>= 2.18),
-    S4Vectors (>= 0.22),
+    basejump (>= 0.11.24),
+    goalie (>= 0.4.1),
+    BiocParallel (>= 1.20),
+    IRanges (>= 2.20),
+    S4Vectors (>= 0.24),
     stringr (>= 1.4),
     methods,
     utils
 Suggests:
-    acidroxygen (>= 0.1),
-    BiocStyle (>= 2.12),
-    knitr (>= 1.22),
+    acidroxygen (>= 0.1.5),
+    BiocStyle (>= 2.14),
+    knitr (>= 1.26),
     patrick (>= 0.0.1),
     testthat (>= 2.2)
 Remotes:
@@ -42,5 +42,5 @@ Remotes:
 biocViews:
     GenomeAnnotation
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
