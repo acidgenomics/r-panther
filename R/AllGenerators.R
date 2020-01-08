@@ -184,7 +184,7 @@ PANTHER <- function(  # nolint
 
 
 ## Updated 2020-01-09.
-.splitPANTHERTerms <- function(x, BPPARAM) {
+.splitPANTHERTerms <- function(x, BPPARAM) {  # nolint
     assert(is.atomic(x))
     if (all(is.na(x))) return(x)
     bplapply(
