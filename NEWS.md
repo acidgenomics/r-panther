@@ -1,4 +1,4 @@
-## PANTHER 0.1.1 (2020-01-07)
+## PANTHER 0.1.1 (2020-01-08)
 
 ### Minor changes
 
