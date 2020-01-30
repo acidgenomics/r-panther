@@ -18,7 +18,7 @@ URL:
     https://panther.acidgenomics.com/,
     https://github.com/acidgenomics/PANTHER/
 BugReports: https://github.com/acidgenomics/PANTHER/issues/
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 3.6)
 Imports:
