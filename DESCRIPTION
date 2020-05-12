@@ -31,7 +31,6 @@ Imports:
     methods,
     utils
 Suggests:
-    acidroxygen (>= 0.1.5),
     BiocStyle (>= 2.14),
     knitr (>= 1.26),
     patrick (>= 0.0.1),
