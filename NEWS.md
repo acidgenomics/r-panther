@@ -1,3 +1,9 @@
+## PANTHER 0.1.2 (2020-07-23)
+
+### Minor changes
+
+- Maintenance release, upgrading R dependency to 4.0.
+
 ## PANTHER 0.1.1 (2020-01-08)
 
 ### Minor changes

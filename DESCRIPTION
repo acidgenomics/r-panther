@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.1.1
-Date: 2020-01-08
+Version: 0.1.2
+Date: 2020-07-23
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -20,26 +20,26 @@ URL:
 BugReports: https://github.com/acidgenomics/PANTHER/issues/
 License: GPL-3
 Encoding: UTF-8
-Depends: R (>= 3.6)
+Depends: R (>= 4.0)
 Imports:
-    basejump (>= 0.11.24),
-    goalie (>= 0.4.1),
-    BiocParallel (>= 1.20),
-    IRanges (>= 2.20),
-    S4Vectors (>= 0.24),
+    BiocParallel,
+    IRanges,
+    S4Vectors,
+    basejump (>= 0.12.8),
+    goalie (>= 0.4.5),
     stringr (>= 1.4),
     methods,
     utils
 Suggests:
-    BiocStyle (>= 2.14),
-    knitr (>= 1.26),
-    patrick (>= 0.0.1),
-    testthat (>= 2.2)
+    BiocStyle,
+    knitr,
+    patrick,
+    testthat
 Remotes:
     acidgenomics/basejump,
     acidgenomics/goalie
 biocViews:
     GenomeAnnotation
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
