@@ -1,5 +1,4 @@
 library(testthat)
-library(patrick)
 library(PANTHER)
 test_check("PANTHER")
 if (isTRUE(getOption("acid.test.extra"))) {

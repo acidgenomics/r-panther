@@ -2,7 +2,7 @@ Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
 Version: 0.1.2
-Date: 2020-07-23
+Date: 2020-07-28
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -27,13 +27,12 @@ Imports:
     S4Vectors,
     basejump (>= 0.12.8),
     goalie (>= 0.4.5),
-    stringr (>= 1.4),
     methods,
+    stringr (>= 1.4),
     utils
 Suggests:
     BiocStyle,
     knitr,
-    patrick,
     testthat
 Remotes:
     acidgenomics/basejump,
