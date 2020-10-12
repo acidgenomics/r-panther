@@ -8,5 +8,5 @@
 #'   isString isSubset validate
 #' @importFrom methods as is new setClass setValidity show
 #' @importFrom stringr str_detect str_extract str_match
-#' @importFrom utils packageVersion
+#' @importFrom utils packageName packageVersion
 NULL

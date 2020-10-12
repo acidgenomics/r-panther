@@ -9,7 +9,7 @@
 #' - *Homo sapiens*
 #' - *Mus musculus*
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param release `character(1)` or `NULL`.
 #'   PANTHER release version. If `NULL`, defaults to current release. Consult
 #'   the PANTHER website for a list of release versions available from the FTP
@@ -137,7 +137,7 @@ PANTHER <- function(  # nolint
     data <- data[, sort(colnames(data)), drop = FALSE]
     rownames(data) <- data[["geneID"]]
     metadata(data) <- list(
-        version = packageVersion("PANTHER"),
+        version = packageVersion(packageName()),
         date = Sys.Date()
     )
     metadata(data)[["organism"]] <- organism
