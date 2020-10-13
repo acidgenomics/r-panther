@@ -16,10 +16,7 @@
 #'   server (e.g. `"14.0"`).
 #'
 #' @examples
-#' x <- PANTHER(
-#'     organism = "Homo sapiens",
-#'     BPPARAM = BiocParallel::SerialParam()
-#' )
+#' x <- PANTHER(organism = "Homo sapiens")
 #' print(x)
 NULL
 
