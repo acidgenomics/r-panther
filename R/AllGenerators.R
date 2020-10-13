@@ -125,7 +125,9 @@ PANTHER <-
         data <- fun(data)
         assert(
             is(data, "DataFrame"),
-            hasRows(data)
+            hasRows(data),
+            isSubset("geneID", colnames(data)),
+            !all(is.na(data[["geneID"]]))
         )
         data[["keys"]] <- NULL
         data <- data[, unique(c("geneID", colnames(data)))]
@@ -147,6 +149,11 @@ PANTHER <-
         data <- data[order(data[["geneID"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneID"]]))
         message("Splitting and sorting the GO terms.")
+        ## FIXME This step is now breaking due to list to DataFrame coercion
+        ## error popping up in AcidPlyr.
+        ## Error in DataFrame(list, row.names = rownames(object)) :
+        ##     cannot coerce class "list" to a DataFrame
+        ## Calls: mutateAt ... transmuteAt -> transmuteAt -> mutateAll -> mutateAll -> DataFrame
         data <- mutateAt(
             object = data,
             vars = c(
