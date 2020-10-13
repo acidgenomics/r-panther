@@ -5,9 +5,10 @@
 \title{PANTHER database annotations}
 \usage{
 PANTHER(
-  organism,
+  organism = c("Homo sapiens", "Mus musculus", "Caenorhabditis elegans",
+    "Drosophila melanogaster"),
   release = NULL,
-  BPPARAM = BiocParallel::SerialParam(progressbar = TRUE)
+  BPPARAM = BiocParallel::bpparam()
 )
 }
 \arguments{
@@ -36,7 +37,7 @@ We recommend using one of the following:
 for \strong{P}rotein \strong{AN}alysis \strong{TH}rough \strong{E}volutionary \strong{R}elationships.
 }
 \note{
-Updated 2019-08-27.
+Updated 2020-10-12.
 }
 \section{Suported organisms}{
 
@@ -49,10 +50,6 @@ Updated 2019-08-27.
 }
 
 \examples{
-options(acid.test = TRUE)
-x <- PANTHER(
-    organism = "Homo sapiens",
-    BPPARAM = BiocParallel::SerialParam()
-)
+x <- PANTHER(organism = "Homo sapiens")
 print(x)
 }
