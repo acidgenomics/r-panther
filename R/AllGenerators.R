@@ -60,8 +60,8 @@ NULL
 
 #' @rdname PANTHER
 #' @export
-PANTHER <-
-    function(  # nolint
+PANTHER <-  # nolint
+    function(
         organism,
         release = NULL,
         BPPARAM = BiocParallel::bpparam()  # nolint
@@ -146,11 +146,6 @@ PANTHER <-
         data <- data[order(data[["geneID"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneID"]]))
         message("Splitting and sorting the GO terms.")
-        ## FIXME This step is now breaking due to list to DataFrame coercion
-        ## error popping up in AcidPlyr.
-        ## Error in DataFrame(list, row.names = rownames(object)) :
-        ##     cannot coerce class "list" to a DataFrame
-        ## Calls: mutateAt ... transmuteAt -> transmuteAt -> mutateAll -> mutateAll -> DataFrame
         data <- mutateAt(
             object = data,
             vars = c(
