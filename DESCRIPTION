@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.1.3
-Date: 2020-10-12
+Version: 0.1.4
+Date: 2020-10-28
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
