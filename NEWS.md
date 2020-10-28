@@ -1,3 +1,10 @@
+## PANTHER 0.1.4 (2020-10-28)
+
+### Minor changes
+
+- Improved message consistency, using cli package.
+- Sped up package checks for Travis CI inside Docker image.
+
 ## PANTHER 0.1.3 (2020-10-12)
 
 ### Minor changes

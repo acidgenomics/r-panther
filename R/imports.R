@@ -5,6 +5,7 @@
 #' @importFrom basejump HGNC2Ensembl MGI2Ensembl basejumpTestsURL cacheURL
 #'   camelCase import leftJoin mutateAt pasteURL showHeader showSlotInfo
 #'   transmit
+#' @importFrom cli cli_alert
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
 #'   isString isSubset validate
 #' @importFrom methods as is new setClass setValidity show

@@ -50,6 +50,9 @@ Updated 2020-10-12.
 }
 
 \examples{
-x <- PANTHER(organism = "Homo sapiens")
-print(x)
+## CPU intensive, so skip for CI checks.
+if (!goalie::isDocker()) {
+    x <- PANTHER(organism = "Homo sapiens")
+    print(x)
+}
 }

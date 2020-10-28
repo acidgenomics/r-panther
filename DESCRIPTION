@@ -26,6 +26,7 @@ Imports:
     IRanges,
     S4Vectors,
     basejump (>= 0.13.2),
+    cli,
     goalie (>= 0.4.9),
     methods,
     stringr (>= 1.4),
