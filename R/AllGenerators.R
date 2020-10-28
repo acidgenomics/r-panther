@@ -16,8 +16,11 @@
 #'   server (e.g. `"14.0"`).
 #'
 #' @examples
-#' x <- PANTHER(organism = "Homo sapiens")
-#' print(x)
+#' ## CPU intensive, so skip for CI checks.
+#' if (!goalie::isDocker()) {
+#'     x <- PANTHER(organism = "Homo sapiens")
+#'     print(x)
+#' }
 NULL
 
 
@@ -45,7 +48,7 @@ NULL
 ##
 ## nolint end
 ##
-## Updated 2019-08-16.
+## Updated 2020-10-28.
 .pantherReleases <- c(
     "11.0",
     "12.0",
@@ -53,6 +56,7 @@ NULL
     "13.1",
     "14.0",
     "14.1",
+    "15.0",
     "current_release"
 )
 
@@ -75,7 +79,7 @@ PANTHER <-  # nolint
         }
         assert(isString(release))
         release <- match.arg(arg = release, choices = .pantherReleases)
-        message(sprintf(
+        cli_alert(sprintf(
             "Downloading PANTHER annotations for '%s' (%s).",
             organism,
             gsub("_", " ", release)
@@ -145,7 +149,7 @@ PANTHER <-  # nolint
         data <- unsplit(split, f = unlist(split[, "geneID"]))
         data <- data[order(data[["geneID"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneID"]]))
-        message("Splitting and sorting the GO terms.")
+        cli_alert("Splitting and sorting the GO terms.")
         data <- mutateAt(
             object = data,
             vars = c(
