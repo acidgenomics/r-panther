@@ -1,1 +1,0 @@
-options(acid.test = TRUE)

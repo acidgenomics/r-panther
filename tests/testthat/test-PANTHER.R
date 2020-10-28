@@ -1,5 +1,6 @@
 context("PANTHER")
 
+goalie::skip_on_docker()
 skip_if_not(hasInternet())
 
 test_that("organism", {
@@ -8,13 +9,9 @@ test_that("organism", {
             object <- PANTHER(organism)
         }))
         expect_s4_class(object, "PANTHER")
+        expect_output(
+            object = show(object),
+            regexp = "PANTHER"
+        )
     }
-})
-
-test_that("show", {
-    object <- PANTHER("Homo sapiens")
-    expect_output(
-        object = show(object),
-        regexp = "PANTHER"
-    )
 })

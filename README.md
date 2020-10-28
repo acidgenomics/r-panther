@@ -1,5 +1,8 @@
 # PANTHER
 
+[![Repo status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Travis CI build status](https://travis-ci.com/acidgenomics/PANTHER.svg?branch=master)](https://travis-ci.com/acidgenomics/PANTHER)
+
 [PANTHER][] database annotations.
 
 ## Installation
