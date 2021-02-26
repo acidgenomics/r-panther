@@ -14,7 +14,7 @@ NULL
         showSlotInfo(list(
             organism = metadata(object)[["organism"]],
             release = metadata(object)[["release"]],
-            genes = object[["geneID"]]
+            genes = object[["geneId"]]
         ))
     }
 

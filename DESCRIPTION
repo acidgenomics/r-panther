@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.1.4
-Date: 2020-10-28
+Version: 0.1.5
+Date: 2021-02-26
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -18,7 +18,7 @@ URL:
     https://panther.acidgenomics.com/,
     https://github.com/acidgenomics/PANTHER/
 BugReports: https://github.com/acidgenomics/PANTHER/issues/
-License: GPL-3
+License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
@@ -32,12 +32,9 @@ Imports:
     stringr (>= 1.4),
     utils
 Suggests:
-    BiocStyle,
-    knitr,
     testthat
 biocViews:
     GenomeAnnotation
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-VignetteBuilder: knitr
 Additional_repositories: https://r.acidgenomics.com

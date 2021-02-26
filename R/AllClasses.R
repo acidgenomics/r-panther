@@ -18,14 +18,14 @@ setValidity(
             identical(
                 x = colnames(object),
                 y = c(
-                    "geneID",
-                    "goBP",
-                    "goCC",
-                    "goMF",
+                    "geneId",
+                    "goBp",  # FIXME Need to deal with this
+                    "goCc",  # FIXME Need to deal with this
+                    "goMf",  # FIXME Need to deal with this
                     "pantherClass",
                     "pantherFamilyName",
                     "pantherPathway",
-                    "pantherSubfamilyID",
+                    "pantherSubfamilyId",
                     "pantherSubfamilyName"
                 )
             ),

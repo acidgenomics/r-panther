@@ -100,14 +100,14 @@ PANTHER <-  # nolint
             file = file,
             format = "tsv",
             colnames = c(
-                "pantherID",
+                "pantherId",
                 "X2",
-                "pantherSubfamilyID",
+                "pantherSubfamilyId",
                 "pantherFamilyName",
                 "pantherSubfamilyName",
-                "goMF",
-                "goBP",
-                "goCC",
+                "goMf",  # FIXME Breaking change?
+                "goBp",  # FIXME Breaking change?
+                "goCc",  # FIXME Breaking change?
                 "pantherClass",
                 "pantherPathway"
             )
@@ -115,10 +115,10 @@ PANTHER <-  # nolint
         data[["X2"]] <- NULL
         data <- as(data, "DataFrame")
         ## Now using base R methods here instead of `tidyr::separate()`.
-        idsplit <- strsplit(data[["pantherID"]], split = "|", fixed = TRUE)
+        idsplit <- strsplit(data[["pantherId"]], split = "|", fixed = TRUE)
         idsplit <- DataFrame(do.call(what = rbind, args = idsplit))
         colnames(idsplit) <- c("organism", "keys", "uniprotKB")
-        data[["pantherID"]] <- NULL
+        data[["pantherId"]] <- NULL
         data[["keys"]] <- idsplit[["keys"]]
         ## Using organism-specific internal return functions here.
         fun <- get(paste("", "PANTHER", camelCase(organism), sep = "."))
@@ -127,28 +127,28 @@ PANTHER <-  # nolint
         assert(
             is(data, "DataFrame"),
             hasRows(data),
-            isSubset("geneID", colnames(data)),
-            !all(is.na(data[["geneID"]]))
+            isSubset("geneId", colnames(data)),
+            !all(is.na(data[["geneId"]]))
         )
         data[["keys"]] <- NULL
-        data <- data[, unique(c("geneID", colnames(data)))]
-        keep <- !is.na(data[["geneID"]])
+        data <- data[, unique(c("geneId", colnames(data)))]
+        keep <- !is.na(data[["geneId"]])
         data <- data[keep, , drop = FALSE]
         data <- unique(data)
         ## Some organisms have duplicate PANTHER annotations per gene ID.
-        split <- split(data, f = data[["geneID"]])
+        split <- split(data, f = data[["geneId"]])
         split <- SplitDataFrameList(bplapply(
             X = split,
             FUN = function(x) {
-                x <- x[order(x[["pantherSubfamilyID"]]), , drop = FALSE]
+                x <- x[order(x[["pantherSubfamilyId"]]), , drop = FALSE]
                 x <- head(x, n = 1L)
                 x
             },
             BPPARAM = BPPARAM
         ))
-        data <- unsplit(split, f = unlist(split[, "geneID"]))
-        data <- data[order(data[["geneID"]]), , drop = FALSE]
-        assert(hasNoDuplicates(data[["geneID"]]))
+        data <- unsplit(split, f = unlist(split[, "geneId"]))
+        data <- data[order(data[["geneId"]]), , drop = FALSE]
+        assert(hasNoDuplicates(data[["geneId"]]))
         cli_alert("Splitting and sorting the GO terms.")
         data <- mutateAt(
             object = data,
@@ -164,7 +164,7 @@ PANTHER <-  # nolint
         )
         ## Sort columns alphabetically.
         data <- data[, sort(colnames(data)), drop = FALSE]
-        rownames(data) <- data[["geneID"]]
+        rownames(data) <- data[["geneId"]]
         metadata(data) <- list(
             version = packageVersion(packageName()),
             date = Sys.Date()
@@ -206,7 +206,7 @@ formals(PANTHER)[["organism"]] <- names(.pantherMappings)
 ## Updated 2019-08-16.
 .PANTHER.caenorhabditisElegans <-  # nolint
     function(data) {
-        data[["geneID"]] <- str_extract(
+        data[["geneId"]] <- str_extract(
             string = data[["keys"]],
             pattern = "WBGene\\d{8}$"
         )
@@ -218,7 +218,7 @@ formals(PANTHER)[["organism"]] <- names(.pantherMappings)
 ## Updated 2019-08-16.
 .PANTHER.drosophilaMelanogaster <-  # nolint
     function(data) {
-        data[["geneID"]] <- str_extract(
+        data[["geneId"]] <- str_extract(
             string = data[["keys"]],
             pattern = "FBgn\\d{7}$"
         )
@@ -233,26 +233,26 @@ formals(PANTHER)[["organism"]] <- names(.pantherMappings)
         h2e <- HGNC2Ensembl()
         assert(identical(colnames(h2e), c("hgnc", "ensembl")))
         h2e <- as(h2e, "DataFrame")
-        colnames(h2e)[colnames(h2e) == "hgnc"] <- "hgncID"
-        colnames(h2e)[colnames(h2e) == "ensembl"] <- "geneID"
+        colnames(h2e)[colnames(h2e) == "hgnc"] <- "hgncId"
+        colnames(h2e)[colnames(h2e) == "ensembl"] <- "geneId"
         ## Filter Ensembl matches.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"
         keep <- str_detect(string = ensembl[["keys"]], pattern = pattern)
         ensembl <- ensembl[keep, , drop = FALSE]
-        ensembl[["geneID"]] <-
+        ensembl[["geneId"]] <-
             str_extract(string = ensembl[["keys"]], pattern = pattern)
         ## Filter HGNC matches.
         hgnc <- data
         pattern <- "HGNC=([0-9]+)"
         keep <- str_detect(string = hgnc[["keys"]], pattern = pattern)
         hgnc <- hgnc[keep, , drop = FALSE]
-        hgnc[["hgncID"]] <- as.integer(
+        hgnc[["hgncId"]] <- as.integer(
             str_match(string = hgnc[["keys"]], pattern = pattern)[, 2L]
         )
-        hgnc <- leftJoin(hgnc, h2e, by = "hgncID")
-        hgnc[["hgncID"]] <- NULL
-        keep <- !is.na(hgnc[["geneID"]])
+        hgnc <- leftJoin(hgnc, h2e, by = "hgncId")
+        hgnc[["hgncId"]] <- NULL
+        keep <- !is.na(hgnc[["geneId"]])
         hgnc <- hgnc[keep, , drop = FALSE]
         hgnc <- unique(hgnc)
         ## Bind and return.
@@ -270,19 +270,19 @@ formals(PANTHER)[["organism"]] <- names(.pantherMappings)
         pattern <- "ENSG[0-9]{11}"
         keep <- str_detect(string = ensembl[["keys"]], pattern = pattern)
         ensembl <- ensembl[keep, , drop = FALSE]
-        ensembl[["geneID"]] <-
+        ensembl[["geneId"]] <-
             str_extract(string = ensembl[["keys"]], pattern = pattern)
         ## Filter HGNC matches.
         mgi <- data
         pattern <- "MGI=([0-9]+)"
         keep <- str_detect(string = mgi[["keys"]], pattern = pattern)
         mgi <- mgi[keep, , drop = FALSE]
-        mgi[["mgiID"]] <- as.integer(
+        mgi[["mgiId"]] <- as.integer(
             str_match(string = mgi[["keys"]], pattern = pattern)[, 2L]
         )
-        mgi <- leftJoin(mgi, mgi2ensembl, by = "mgiID")
-        mgi[["mgiID"]] <- NULL
-        keep <- !is.na(mgi[["geneID"]])
+        mgi <- leftJoin(mgi, mgi2ensembl, by = "mgiId")
+        mgi[["mgiId"]] <- NULL
+        keep <- !is.na(mgi[["geneId"]])
         mgi <- mgi[keep, , drop = FALSE]
         mgi <- unique(mgi)
         ## Bind and return.
