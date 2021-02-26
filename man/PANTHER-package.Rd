@@ -9,9 +9,9 @@ PANTHER database annotations.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://panther.acidgenomics.com/}
-  \item \url{https://github.com/acidgenomics/PANTHER/}
-  \item Report bugs at \url{https://github.com/acidgenomics/PANTHER/issues/}
+  \item \url{https://r.acidgenomics.com/packages/panther/}
+  \item \url{https://github.com/acidgenomics/r-panther/}
+  \item Report bugs at \url{https://github.com/acidgenomics/r-panther/issues/}
 }
 
 }
