@@ -1,19 +1,18 @@
 context("extra | PANTHER")
 
-organisms <- names(.pantherMappings)
+organisms <- sort(names(.pantherMappings))
 
 ## Here's how to obtain supported releases.
-## > releases <- .pantherReleases
-## > releases <- setdiff(releases, "current_release")
+## > releases <- setdiff(.pantherReleases, "current_release")
 
 test_that("PANTHER : 11.0", {
     mapply(
         organism = organisms,
         nrow = c(
-            caenorhabditis_elegans = 15010L,
-            drosophila_melanogaster = 10610L,
-            homo_sapiens = 19730L,
-            mus_musculus = 21112L
+            "Caenorhabditis elegans" = 15010L,
+            "Drosophila melanogaster" = 10610L,
+            "Homo sapiens" = 19730L,
+            "Mus musculus" = 21112L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "11.0")
@@ -28,10 +27,10 @@ test_that("PANTHER : 12.0", {
     mapply(
         organism = organisms,
         nrow = c(
-            caenorhabditis_elegans = 14127L,
-            drosophila_melanogaster = 10030L,
-            homo_sapiens = 19537L,
-            mus_musculus = 20908L
+            "Caenorhabditis elegans" = 14127L,
+            "Drosophila melanogaster" = 10030L,
+            "Homo sapiens" = 19537L,
+            "Mus musculus" = 20908L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "12.0")
@@ -46,10 +45,10 @@ test_that("PANTHER : 13.0", {
     mapply(
         organism = organisms,
         nrow = c(
-            caenorhabditis_elegans = 13494L,
-            drosophila_melanogaster = 10087L,
-            homo_sapiens = 18577L,
-            mus_musculus = 19860L
+            "Caenorhabditis elegans" = 13494L,
+            "Drosophila melanogaster" = 10087L,
+            "Homo sapiens" = 18577L,
+            "Mus musculus" = 19860L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "13.0")
@@ -64,10 +63,10 @@ test_that("PANTHER : 13.1", {
     mapply(
         organism = organisms,
         nrow = c(
-            caenorhabditis_elegans = 13806L,
-            drosophila_melanogaster = 10349L,
-            homo_sapiens = 19648L,
-            mus_musculus = 20967L
+            "Caenorhabditis elegans" = 13806L,
+            "Drosophila melanogaster" = 10349L,
+            "Homo sapiens" = 19648L,
+            "Mus musculus" = 20967L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "13.1")
@@ -82,10 +81,10 @@ test_that("PANTHER : 14.0", {
     mapply(
         organism = organisms,
         nrow = c(
-            caenorhabditis_elegans = 14298L,
-            drosophila_melanogaster = 10547L,
-            homo_sapiens = 19746L,
-            mus_musculus = 21113L
+            "Caenorhabditis elegans" = 14298L,
+            "Drosophila melanogaster" = 10547L,
+            "Homo sapiens" = 19746L,
+            "Mus musculus" = 21113L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "14.0")
@@ -96,14 +95,22 @@ test_that("PANTHER : 14.0", {
     )
 })
 
-## The 15.0 release is messed up on the FTP server.
+## NOTE The 15.0 release is messed up on the FTP server.
 
-## FIXME NEED TO CHECK 16.0 here.
-
-test_that("PANTHER : current_release", {
-    for (organism in organisms) {
-        object <- PANTHER(organism = organism, release = NULL)
-        expect_s4_class(object, "PANTHER")
-        message(sprintf("%s: %d", organism, nrow(object)))
-    }
+test_that("PANTHER : 16.0", {
+    mapply(
+        organism = organisms,
+        nrow = c(
+            "Caenorhabditis elegans" = 14426L,
+            "Drosophila melanogaster" = 10656L,
+            "Homo sapiens" = 19517L,
+            "Mus musculus" = 20984L
+        ),
+        FUN = function(organism, nrow) {
+            object <- PANTHER(organism = organism, release = "16.0")
+            expect_s4_class(object, "PANTHER")
+            expect_identical(nrow(object), nrow)
+        },
+        SIMPLIFY = FALSE
+    )
 })

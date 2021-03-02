@@ -149,7 +149,6 @@ PANTHER <-  # nolint
         ## Using organism-specific internal return functions here.
         fun <- get(paste("", "PANTHER", camelCase(organism), sep = "."))
         assert(is.function(fun))
-        ## FIXME THIS STEP MESSES UP FOR MOUSE...
         data <- fun(data)
         assert(
             is(data, "DataFrame"),
@@ -165,6 +164,7 @@ PANTHER <-  # nolint
         ## NOTE Some organisms have duplicate PANTHER annotations per gene
         ## identifier. This is the case for Homo sapiens 14.0 release.
         keep <- !duplicated(data[["geneId"]])
+        ## FIXME Inform the user in this case...
         data <- data[keep, , drop = FALSE]
         data <- data[order(data[["geneId"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneId"]]))

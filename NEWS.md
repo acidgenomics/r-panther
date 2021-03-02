@@ -1,3 +1,13 @@
+## PANTHER 0.2.0 (2021-03-02)
+
+### Major changes
+
+- Simplified internal code, using improved methods defined in basejump v0.14
+  release series. In particular, now taking advantage of `CharacterList`
+  methods for operations on list columns, which are way faster than attempting
+  to process via BiocParallel.
+- Updated to support PANTHER 16.0, which has introduced some breaking changes.
+
 ## PANTHER 0.1.4 (2020-10-28)
 
 ### Minor changes
