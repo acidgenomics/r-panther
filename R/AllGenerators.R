@@ -55,13 +55,14 @@ NULL
 ##
 ## nolint end
 .pantherReleases <- c(
+    "current_release",
     "11.0",
     "12.0",
     "13.0",
     "13.1",
     "14.0",
     "14.1",
-    "15.0",  # This file is messed up.
+    "15.0",  # This is messed up on the FTP server?
     "16.0"
 )
 
@@ -88,7 +89,10 @@ PANTHER <-  # nolint
             release <- "current_release"
         }
         assert(isString(release))
-        release <- match.arg(arg = release, choices = .pantherReleases)
+        release <- match.arg(
+            arg = release,
+            choices = .pantherReleases
+        )
         alert(sprintf(
             "Downloading PANTHER annotations for {.emph %s} ({.var %s}).",
             organism,
@@ -160,7 +164,7 @@ PANTHER <-  # nolint
         data <- data[keep, , drop = FALSE]
         data <- unique(data)
         ## Some organisms have duplicate PANTHER annotations per gene ID.
-        ## FIXME WHICH ONES? NEED TO HANDLE THIS MORE CLEARLY...
+        ## FIXME WHICH ORGANISMS? NEED TO HANDLE THIS MORE CLEARLY...
         if (any(duplicated(data[["geneId"]]))) {
             split <- split(data, f = data[["geneId"]])
             assert(is(split, "SplitDataFrameList"))
@@ -207,8 +211,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 ## FIXME THIS NEEDS A REWORK.
 ## Updated 2021-03-02.
 .splitPantherTerms <- function(x) {  # nolint
-
-    x <- strsplit(x = x, split = "|", fixed = TRUE)
+    x <- strsplit(x, split = ";", fixed = TRUE)
     x <- CharacterList(x)
     x <- sort(unique(x))
     x
@@ -217,10 +220,6 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
     lapply(
         X = x,
         FUN = function(x) {
-            if (is.na(x)) return(NULL)
-            x <- strsplit(x, split = ";")
-            x <- unlist(x)
-            x <- sort(unique(x))
             x <- gsub("#([A-Z0-9:]+)", " [\\1]", x)
             x <- gsub(">", " > ", x)
             if (hasLength(x)) {

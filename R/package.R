@@ -7,7 +7,7 @@
 #'
 #' @importFrom basejump CharacterList DataFrame HGNC2Ensembl MGI2Ensembl
 #'   SimpleList SplitDataFrameList alert basejumpTestsURL cacheURL camelCase
-#'   do.call head import lapply leftJoin metadata metadata<- mutateAt
+#'   do.call gsub head import lapply leftJoin metadata metadata<- mutateAt
 #'   packageName packageVersion pasteURL rbind showHeader showSlotInfo sort
 #'   split tail transmit unique unlist unsplit
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
