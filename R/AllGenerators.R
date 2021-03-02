@@ -35,20 +35,25 @@ NULL
 
 
 
-## nolint start
-##
-## Release versions are here:
-## > url <- pasteURL(
-## >     "ftp.pantherdb.org",
-## >     "sequence_classifications",
-## >     protocol = "ftp"
-## > )
-## > x <- RCurl::getURL(url = paste0(url, "/"), dirlistonly = TRUE)
-## > x <- strsplit(x, split = "\n", fixed = TRUE)
+#' Supported PANTHER releases
+#'
+#' @note Updated 2021-03-02.
+#' @noRd
+#'
+#' @details
+#' Release versions are here:
+#'
+#' ```r
+#' url <- pasteURL(
+#'     "ftp.pantherdb.org",
+#'     "sequence_classifications",
+#'     protocol = "ftp"
+#' )
+#' x <- RCurl::getURL(url = paste0(url, "/"), dirlistonly = TRUE)
+#' x <- strsplit(x, split = "\n", fixed = TRUE)
+## ```
 ##
 ## nolint end
-##
-## Updated 2020-10-28.
 .pantherReleases <- c(
     "11.0",
     "12.0",
@@ -57,7 +62,7 @@ NULL
     "14.0",
     "14.1",
     "15.0",
-    "current_release"
+    "16.0"
 )
 
 
@@ -67,8 +72,7 @@ NULL
 PANTHER <-  # nolint
     function(
         organism,
-        release = NULL,
-        BPPARAM = BiocParallel::bpparam()  # nolint
+        release = NULL
     ) {
         assert(hasInternet())
         organism <- match.arg(organism)
@@ -79,7 +83,7 @@ PANTHER <-  # nolint
         }
         assert(isString(release))
         release <- match.arg(arg = release, choices = .pantherReleases)
-        cli_alert(sprintf(
+        alert(sprintf(
             "Downloading PANTHER annotations for '%s' (%s).",
             organism,
             gsub("_", " ", release)
@@ -137,19 +141,19 @@ PANTHER <-  # nolint
         data <- unique(data)
         ## Some organisms have duplicate PANTHER annotations per gene ID.
         split <- split(data, f = data[["geneId"]])
-        split <- SplitDataFrameList(bplapply(
+        ## FIXME RETHINK THIS....
+        split <- SplitDataFrameList(lapply(
             X = split,
             FUN = function(x) {
                 x <- x[order(x[["pantherSubfamilyId"]]), , drop = FALSE]
                 x <- head(x, n = 1L)
                 x
-            },
-            BPPARAM = BPPARAM
+            }
         ))
         data <- unsplit(split, f = unlist(split[, "geneId"]))
         data <- data[order(data[["geneId"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneId"]]))
-        cli_alert("Splitting and sorting the GO terms.")
+        alert("Splitting and sorting the GO terms.")
         data <- mutateAt(
             object = data,
             vars = c(
@@ -159,8 +163,7 @@ PANTHER <-  # nolint
                 "pantherClass",
                 "pantherPathway"
             ),
-            fun = .splitPANTHERTerms,
-            BPPARAM = BPPARAM
+            fun = .splitPANTHERTerms
         )
         ## Sort columns alphabetically.
         data <- data[, sort(colnames(data)), drop = FALSE]
@@ -175,14 +178,17 @@ PANTHER <-  # nolint
     }
 
 formals(PANTHER)[["organism"]] <- names(.pantherMappings)
+formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2020-01-09.
-.splitPANTHERTerms <- function(x, BPPARAM) {  # nolint
+## Updated 2021-03-02.
+## FIXME REWORK USING CHARACTERLIST...
+.splitPANTHERTerms <- function(x) {  # nolint
     assert(is.atomic(x))
     if (all(is.na(x))) return(x)
-    bplapply(
+    ## FIXME RETHINK THIS...USE CHARACTERLIST APPROACH INSTEAD.
+    lapply(
         X = x,
         FUN = function(x) {
             if (is.na(x)) return(NULL)
@@ -196,8 +202,7 @@ formals(PANTHER)[["organism"]] <- names(.pantherMappings)
             } else {
                 NULL
             }
-        },
-        BPPARAM = BPPARAM
+        }
     )
 }
 

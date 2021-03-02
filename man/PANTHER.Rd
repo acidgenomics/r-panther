@@ -7,8 +7,7 @@
 PANTHER(
   organism = c("Homo sapiens", "Mus musculus", "Caenorhabditis elegans",
     "Drosophila melanogaster"),
-  release = NULL,
-  BPPARAM = BiocParallel::bpparam()
+  release = "16.0"
 )
 }
 \arguments{
@@ -19,15 +18,6 @@ Full Latin organism name (e.g. \code{"Homo sapiens"}).}
 PANTHER release version. If \code{NULL}, defaults to current release. Consult
 the PANTHER website for a list of release versions available from the FTP
 server (e.g. \code{"14.0"}).}
-
-\item{BPPARAM}{\code{bpparamClass}.
-BiocParallel parameter to specify the desired processor configuration.\cr
-We recommend using one of the following:
-\itemize{
-\item \link[BiocParallel:register]{bpparam}.
-\item \link[BiocParallel:SerialParam-class]{SerialParam}.
-\item \link[BiocParallel:MulticoreParam-class]{MulticoreParam}.
-}}
 }
 \value{
 \code{PANTHER}.
