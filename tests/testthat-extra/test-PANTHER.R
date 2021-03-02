@@ -86,8 +86,8 @@ test_that("PANTHER : 14.0", {
         nrow = c(
             "Caenorhabditis elegans" = 14298L,
             "Drosophila melanogaster" = 10547L,
-            "Homo sapiens" = 19746L,
-            "Mus musculus" = 21113L
+            "Homo sapiens" = 19770L,
+            "Mus musculus" = 21058L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "14.0")
