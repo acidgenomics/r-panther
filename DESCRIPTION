@@ -25,9 +25,9 @@ Imports:
     BiocParallel,
     IRanges,
     S4Vectors,
-    basejump (>= 0.13.2),
+    basejump (>= 0.14.15),
     cli,
-    goalie (>= 0.4.9),
+    goalie (>= 0.5.0),
     methods,
     stringr (>= 1.4),
     utils
