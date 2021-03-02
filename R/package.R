@@ -7,8 +7,9 @@
 #'
 #' @importFrom basejump CharacterList DataFrame HGNC2Ensembl MGI2Ensembl
 #'   SimpleList SplitDataFrameList alert basejumpTestsURL cacheURL camelCase
-#'   do.call head import leftJoin metadata metadata<- mutateAt packageName
-#'   packageVersion pasteURL showHeader showSlotInfo split tail transmit unsplit
+#'   do.call head import lapply leftJoin metadata metadata<- mutateAt
+#'   packageName packageVersion pasteURL rbind showHeader showSlotInfo sort
+#'   split tail transmit unique unlist unsplit
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
 #'   isString isSubset validate
 #' @importFrom methods as is new setClass setValidity show
