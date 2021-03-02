@@ -161,10 +161,25 @@ PANTHER <-  # nolint
         keep <- !is.na(data[["geneId"]])
         data <- data[keep, , drop = FALSE]
         data <- unique(data)
-        ## NOTE Some organisms have duplicate PANTHER annotations per gene
-        ## identifier. This is the case for Homo sapiens 14.0 release.
+        ## Some organisms have duplicate PANTHER annotations per gene.
+        ## This is the case for Homo sapiens 14.0 release.
         keep <- !duplicated(data[["geneId"]])
-        ## FIXME Inform the user in this case...
+        if (!all(keep)) {
+            n <- sum(!keep)
+            alertWarning(sprintf(
+                paste(
+                    "%d duplicated gene %s detected.",
+                    "Keeping only the first entry per gene."
+                ),
+                n,
+                ngettext(
+                    n = n,
+                    msg1 = "identifier",
+                    msg2 = "identifiers"
+                )
+            ))
+            sum(!keep)
+        }
         data <- data[keep, , drop = FALSE]
         data <- data[order(data[["geneId"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneId"]]))
