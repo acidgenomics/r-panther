@@ -103,7 +103,7 @@ PANTHER <-  # nolint
             protocol = "ftp"
         )
         file <- cacheURL(url = url, pkg = .pkgName)
-        if (isTRUE(release < 16)) {
+        if (isTRUE(release < 16L)) {
             ## The "geneName" column is not defined in older releases.
             colnames <- c(
                 "dbXref",
@@ -133,11 +133,10 @@ PANTHER <-  # nolint
             )
         }
         data <- import(file = file, format = "tsv", colnames = colnames)
-        ## Hardening against messed up files (e.g. 15.0 release).
+        ## Harden against messed up files (e.g. 15.0 release).
         if (isTRUE(nrow(data) < 5000L)) {
             stop(sprintf("Invalid URL (missing items): '%s'.", url))
         }
-        ## > data[["proteinId"]] <- NULL
         data <- as(data, "DataFrame")
         ## Now using base R methods here instead of `tidyr::separate()`.
         idsplit <- DataFrame(do.call(
@@ -150,6 +149,7 @@ PANTHER <-  # nolint
         ## Using organism-specific internal return functions here.
         fun <- get(paste("", "PANTHER", camelCase(organism), sep = "."))
         assert(is.function(fun))
+        ## FIXME THIS STEP MESSES UP FOR MOUSE...
         data <- fun(data)
         assert(
             is(data, "DataFrame"),
@@ -265,18 +265,27 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2019-08-16.
+## Updated 2021-03-02.
 .PANTHER.musMusculus <-  # nolint
     function(data) {
-        mgi2ensembl <- MGI2Ensembl()
+        suppressWarnings({
+            m2e <- MGI2Ensembl()
+        })
+        assert(
+            is(m2e, "MGI2Ensembl"),
+            identical(colnames(m2e), c("mgiId", "ensemblId"))
+        )
+        m2e <- as(m2e, "DataFrame")
+        colnames(m2e)[colnames(m2e) == "ensemblId"] <- "geneId"
         ## Filter Ensembl matches.
+        ## NOTE PANTHER 16.0 doesn't contain any of these.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"
         keep <- str_detect(string = ensembl[["keys"]], pattern = pattern)
         ensembl <- ensembl[keep, , drop = FALSE]
         ensembl[["geneId"]] <-
             str_extract(string = ensembl[["keys"]], pattern = pattern)
-        ## Filter HGNC matches.
+        ## Filter MGI matches.
         mgi <- data
         pattern <- "MGI=([0-9]+)"
         keep <- str_detect(string = mgi[["keys"]], pattern = pattern)
@@ -284,7 +293,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
         mgi[["mgiId"]] <- as.integer(
             str_match(string = mgi[["keys"]], pattern = pattern)[, 2L]
         )
-        mgi <- leftJoin(mgi, mgi2ensembl, by = "mgiId")
+        mgi <- leftJoin(mgi, m2e, by = "mgiId")
         mgi[["mgiId"]] <- NULL
         keep <- !is.na(mgi[["geneId"]])
         mgi <- mgi[keep, , drop = FALSE]

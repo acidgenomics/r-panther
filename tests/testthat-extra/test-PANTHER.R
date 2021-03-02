@@ -96,6 +96,10 @@ test_that("PANTHER : 14.0", {
     )
 })
 
+## The 15.0 release is messed up on the FTP server.
+
+## FIXME NEED TO CHECK 16.0 here.
+
 test_that("PANTHER : current_release", {
     for (organism in organisms) {
         object <- PANTHER(organism = organism, release = NULL)

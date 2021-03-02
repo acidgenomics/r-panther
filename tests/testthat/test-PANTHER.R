@@ -1,6 +1,5 @@
 context("PANTHER")
 
-goalie::skip_on_docker()
 skip_if_not(hasInternet())
 
 test_that("organism", {
