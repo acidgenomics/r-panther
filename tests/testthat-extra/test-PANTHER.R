@@ -11,8 +11,8 @@ test_that("PANTHER : 11.0", {
         nrow = c(
             "Caenorhabditis elegans" = 15010L,
             "Drosophila melanogaster" = 10610L,
-            "Homo sapiens" = 19730L,
-            "Mus musculus" = 21112L
+            "Homo sapiens" = 19752L,
+            "Mus musculus" = 21093L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "11.0")
@@ -29,8 +29,8 @@ test_that("PANTHER : 12.0", {
         nrow = c(
             "Caenorhabditis elegans" = 14127L,
             "Drosophila melanogaster" = 10030L,
-            "Homo sapiens" = 19537L,
-            "Mus musculus" = 20908L
+            "Homo sapiens" = 19558L,
+            "Mus musculus" = 20882L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "12.0")
@@ -47,8 +47,8 @@ test_that("PANTHER : 13.0", {
         nrow = c(
             "Caenorhabditis elegans" = 13494L,
             "Drosophila melanogaster" = 10087L,
-            "Homo sapiens" = 18577L,
-            "Mus musculus" = 19860L
+            "Homo sapiens" = 18600L,
+            "Mus musculus" = 19821L
         ),
         FUN = function(organism, nrow) {
             object <- PANTHER(organism = organism, release = "13.0")
@@ -65,11 +65,14 @@ test_that("PANTHER : 13.1", {
         nrow = c(
             "Caenorhabditis elegans" = 13806L,
             "Drosophila melanogaster" = 10349L,
-            "Homo sapiens" = 19648L,
-            "Mus musculus" = 20967L
+            "Homo sapiens" = 19671L,
+            "Mus musculus" = 20929L
         ),
         FUN = function(organism, nrow) {
-            object <- PANTHER(organism = organism, release = "13.1")
+            ## NOTE C. elegans file here has parsing issues.
+            suppressWarnings({
+                object <- PANTHER(organism = organism, release = "13.1")
+            })
             expect_s4_class(object, "PANTHER")
             expect_identical(nrow(object), nrow)
         },

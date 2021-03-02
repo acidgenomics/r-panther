@@ -177,7 +177,6 @@ PANTHER <-  # nolint
                 ),
                 toString(dupes, width = 100L)
             ))
-            sum(!keep)
         }
         data <- data[keep, , drop = FALSE]
         data <- data[order(data[["geneId"]]), , drop = FALSE]
@@ -212,6 +211,8 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 ## Updated 2021-03-02.
 .splitPantherTerms <- function(x) {  # nolint
+    ## e.g. for C. elegans 13.1 release file.
+    if (all(is.na(x))) return(x)
     x <- strsplit(x, split = ";", fixed = TRUE)
     x <- CharacterList(x)
     x <- sort(unique(x))
