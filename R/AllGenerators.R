@@ -165,18 +165,17 @@ PANTHER <-  # nolint
         ## This is the case for Homo sapiens 14.0 release.
         keep <- !duplicated(data[["geneId"]])
         if (!all(keep)) {
-            n <- sum(!keep)
+            dupes <- data[["geneId"]][!keep]
+            n <- length(dupes)
             alertWarning(sprintf(
-                paste(
-                    "%d duplicated gene %s detected.",
-                    "Keeping only the first entry per gene."
-                ),
+                "%d duplicated gene %s detected: %s.",
                 n,
                 ngettext(
                     n = n,
                     msg1 = "identifier",
                     msg2 = "identifiers"
-                )
+                ),
+                toString(dupes, width = 100L)
             ))
             sum(!keep)
         }
