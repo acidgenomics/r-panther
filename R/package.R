@@ -11,7 +11,7 @@
 #'   packageName packageVersion pasteURL rbind showHeader showSlotInfo sort
 #'   split tail transmit unique unlist unsplit
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
-#'   isString isSubset validate
+#'   isOrganism isString isSubset validate
 #' @importFrom methods as is new setClass setValidity show
 #' @importFrom stringr str_detect str_extract str_match
 "_PACKAGE"

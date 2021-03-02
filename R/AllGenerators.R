@@ -61,7 +61,7 @@ NULL
     "13.1",
     "14.0",
     "14.1",
-    "15.0",
+    "15.0",  # This file is messed up.
     "16.0"
 )
 
@@ -74,9 +74,15 @@ PANTHER <-  # nolint
         organism,
         release = NULL
     ) {
-        assert(hasInternet())
-        organism <- match.arg(organism)
-        pantherName <-  .pantherMappings[[organism]]
+        assert(
+            hasInternet(),
+            isOrganism(organism)
+        )
+        organism <- match.arg(
+            arg = organism,
+            choices = names(.pantherMappings)
+        )
+        pantherName <- .pantherMappings[[organism]]
         assert(isString(pantherName))
         if (is.null(release)) {
             release <- "current_release"
@@ -84,22 +90,30 @@ PANTHER <-  # nolint
         assert(isString(release))
         release <- match.arg(arg = release, choices = .pantherReleases)
         alert(sprintf(
-            "Downloading PANTHER annotations for '%s' (%s).",
+            "Downloading PANTHER annotations for {.emph %s} ({.var %s}).",
             organism,
             gsub("_", " ", release)
         ))
-        url <- transmit(
-            remoteDir = pasteURL(
-                "ftp.pantherdb.org",
-                "sequence_classifications",
-                release,
-                "PANTHER_Sequence_Classification_files",
-                protocol = "ftp"
-            ),
-            pattern = pantherName,
-            download = FALSE
+        remoteDir <- pasteURL(
+            "ftp.pantherdb.org",
+            "sequence_classifications",
+            release,
+            "PANTHER_Sequence_Classification_files",
+            protocol = "ftp"
         )
-        file <- cacheURL(url = url, pkg = packageName())
+        if (identical(release, "current_release")) {
+            url <- transmit(
+                remoteDir = remoteDir,
+                pattern = pantherName,
+                download = FALSE
+            )
+        } else {
+            url <- pasteURL(
+                remoteDir,
+                paste0("PTHR", release, "_", pantherName)
+            )
+        }
+        file <- cacheURL(url = url, pkg = .pkgName)
         data <- import(
             file = file,
             format = "tsv",
@@ -116,11 +130,17 @@ PANTHER <-  # nolint
                 "pantherPathway"
             )
         )
+        ## Hardening against messed up files (e.g. 15.0 release).
+        if (isTRUE(nrow(data) < 5000L)) {
+            stop(sprintf("Invalid URL (missing items): '%s'.", url))
+        }
         data[["X2"]] <- NULL
         data <- as(data, "DataFrame")
         ## Now using base R methods here instead of `tidyr::separate()`.
-        idsplit <- strsplit(data[["pantherId"]], split = "|", fixed = TRUE)
-        idsplit <- DataFrame(do.call(what = rbind, args = idsplit))
+        idsplit <- DataFrame(do.call(
+            what = rbind,
+            args = strsplit(data[["pantherId"]], split = "|", fixed = TRUE)
+        ))
         colnames(idsplit) <- c("organism", "keys", "uniprotKB")
         data[["pantherId"]] <- NULL
         data[["keys"]] <- idsplit[["keys"]]
@@ -140,53 +160,59 @@ PANTHER <-  # nolint
         data <- data[keep, , drop = FALSE]
         data <- unique(data)
         ## Some organisms have duplicate PANTHER annotations per gene ID.
-        split <- split(data, f = data[["geneId"]])
-        ## FIXME RETHINK THIS....
-        split <- SplitDataFrameList(lapply(
-            X = split,
-            FUN = function(x) {
-                x <- x[order(x[["pantherSubfamilyId"]]), , drop = FALSE]
-                x <- head(x, n = 1L)
-                x
-            }
-        ))
-        data <- unsplit(split, f = unlist(split[, "geneId"]))
+        ## FIXME WHICH ONES? NEED TO HANDLE THIS MORE CLEARLY...
+        if (any(duplicated(data[["geneId"]]))) {
+            split <- split(data, f = data[["geneId"]])
+            assert(is(split, "SplitDataFrameList"))
+            split <- SplitDataFrameList(lapply(
+                X = split,
+                FUN = function(x) {
+                    x <- x[order(x[["pantherSubfamilyId"]]), , drop = FALSE]
+                    x <- x[1L, , drop = FALSE]
+                    x
+                }
+            ))
+            data <- unsplit(split, f = unlist(split[, "geneId"]))
+        }
         data <- data[order(data[["geneId"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneId"]]))
         alert("Splitting and sorting the GO terms.")
         data <- mutateAt(
             object = data,
             vars = c(
-                "goBP",
-                "goCC",
-                "goMF",
+                "goBp",
+                "goCc",
+                "goMf",
                 "pantherClass",
                 "pantherPathway"
             ),
-            fun = .splitPANTHERTerms
+            fun = .splitPantherTerms
         )
         ## Sort columns alphabetically.
         data <- data[, sort(colnames(data)), drop = FALSE]
         rownames(data) <- data[["geneId"]]
         metadata(data) <- list(
-            version = packageVersion(packageName()),
-            date = Sys.Date()
+            "date" = Sys.Date(),
+            "organism" = organism,
+            "packageVersion" = .pkgVersion,
+            "release" = release
         )
-        metadata(data)[["organism"]] <- organism
-        metadata(data)[["release"]] <- release
         new(Class = "PANTHER", data)
     }
 
-formals(PANTHER)[["organism"]] <- names(.pantherMappings)
 formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
+## FIXME THIS NEEDS A REWORK.
 ## Updated 2021-03-02.
-## FIXME REWORK USING CHARACTERLIST...
-.splitPANTHERTerms <- function(x) {  # nolint
-    assert(is.atomic(x))
-    if (all(is.na(x))) return(x)
+.splitPantherTerms <- function(x) {  # nolint
+
+    x <- strsplit(x = x, split = "|", fixed = TRUE)
+    x <- CharacterList(x)
+    x <- sort(unique(x))
+    x
+
     ## FIXME RETHINK THIS...USE CHARACTERLIST APPROACH INSTEAD.
     lapply(
         X = x,
@@ -232,14 +258,13 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2020-10-12.
+## Updated 2021-03-02.
 .PANTHER.homoSapiens <-  # nolint
     function(data) {
         h2e <- HGNC2Ensembl()
-        assert(identical(colnames(h2e), c("hgnc", "ensembl")))
+        assert(identical(colnames(h2e), c("hgncId", "ensemblId")))
         h2e <- as(h2e, "DataFrame")
-        colnames(h2e)[colnames(h2e) == "hgnc"] <- "hgncId"
-        colnames(h2e)[colnames(h2e) == "ensembl"] <- "geneId"
+        colnames(h2e)[colnames(h2e) == "ensemblId"] <- "geneId"
         ## Filter Ensembl matches.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"

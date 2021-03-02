@@ -4,11 +4,7 @@
 \alias{PANTHER}
 \title{PANTHER database annotations}
 \usage{
-PANTHER(
-  organism = c("Homo sapiens", "Mus musculus", "Caenorhabditis elegans",
-    "Drosophila melanogaster"),
-  release = "16.0"
-)
+PANTHER(organism, release = "16.0")
 }
 \arguments{
 \item{organism}{\code{character(1)}.
