@@ -1,6 +1,6 @@
 #' @name PANTHER
 #' @inherit PANTHER-class title description return
-#' @note Updated 2020-10-12.
+#' @note Updated 2021-03-02.
 #'
 #' @section Suported organisms:
 #'
@@ -51,11 +51,12 @@ NULL
 #' )
 #' x <- RCurl::getURL(url = paste0(url, "/"), dirlistonly = TRUE)
 #' x <- strsplit(x, split = "\n", fixed = TRUE)
-## ```
-##
+#' ```
+#'
+#' Refer to the README file for TSV file specifications:
+#' ftp://ftp.pantherdb.org/sequence_classifications/16.0/README
 ## nolint end
 .pantherReleases <- c(
-    "current_release",
     "11.0",
     "12.0",
     "13.0",
@@ -71,82 +72,84 @@ NULL
 #' @rdname PANTHER
 #' @export
 PANTHER <-  # nolint
-    function(
-        organism,
-        release = NULL
-    ) {
+    function(organism, release) {
+        if (is.null(release)) {
+            release <- tail(.pantherReleases, n = 1L)
+        }
         assert(
             hasInternet(),
-            isOrganism(organism)
+            isOrganism(organism),
+            isString(release)
         )
         organism <- match.arg(
             arg = organism,
             choices = names(.pantherMappings)
         )
-        pantherName <- .pantherMappings[[organism]]
-        assert(isString(pantherName))
-        if (is.null(release)) {
-            release <- "current_release"
-        }
-        assert(isString(release))
         release <- match.arg(
             arg = release,
             choices = .pantherReleases
         )
+        release <- numeric_version(release)
+        pantherName <- .pantherMappings[[organism]]
+        assert(isString(pantherName))
         alert(sprintf(
-            "Downloading PANTHER annotations for {.emph %s} ({.var %s}).",
-            organism,
-            gsub("_", " ", release)
+            "Downloading PANTHER %s annotations for {.emph %s}.",
+            as.character(release),
+            organism
         ))
-        remoteDir <- pasteURL(
+        url <- pasteURL(
             "ftp.pantherdb.org",
             "sequence_classifications",
-            release,
+            as.character(release),
             "PANTHER_Sequence_Classification_files",
+            paste0("PTHR", release, "_", pantherName),
             protocol = "ftp"
         )
-        if (identical(release, "current_release")) {
-            url <- transmit(
-                remoteDir = remoteDir,
-                pattern = pantherName,
-                download = FALSE
-            )
-        } else {
-            url <- pasteURL(
-                remoteDir,
-                paste0("PTHR", release, "_", pantherName)
-            )
-        }
         file <- cacheURL(url = url, pkg = .pkgName)
-        data <- import(
-            file = file,
-            format = "tsv",
-            colnames = c(
-                "pantherId",
-                "X2",
+        if (isTRUE(release < 16)) {
+            ## The "geneName" column is not defined in older releases.
+            colnames <- c(
+                "dbXref",
+                "proteinId",
                 "pantherSubfamilyId",
                 "pantherFamilyName",
                 "pantherSubfamilyName",
-                "goMf",  # FIXME Breaking change?
-                "goBp",  # FIXME Breaking change?
-                "goCc",  # FIXME Breaking change?
+                "goMf",
+                "goBp",
+                "goCc",
                 "pantherClass",
                 "pantherPathway"
             )
-        )
+        } else {
+            colnames <- c(
+                "dbXref",
+                "proteinId",
+                "geneName",
+                "pantherSubfamilyId",
+                "pantherFamilyName",
+                "pantherSubfamilyName",
+                "goMf",
+                "goBp",
+                "goCc",
+                "pantherClass",
+                "pantherPathway"
+            )
+        }
+        ## FIXME IN PIPETTE, DONT ALLOW A COLUMN NAME LENGTH MISMATCH.
+        data <- import(file = file, format = "tsv", colnames = colnames)
         ## Hardening against messed up files (e.g. 15.0 release).
         if (isTRUE(nrow(data) < 5000L)) {
             stop(sprintf("Invalid URL (missing items): '%s'.", url))
         }
-        data[["X2"]] <- NULL
+        ## > data[["proteinId"]] <- NULL
         data <- as(data, "DataFrame")
         ## Now using base R methods here instead of `tidyr::separate()`.
         idsplit <- DataFrame(do.call(
             what = rbind,
-            args = strsplit(data[["pantherId"]], split = "|", fixed = TRUE)
+            args = strsplit(data[["dbXref"]], split = "|", fixed = TRUE)
         ))
         colnames(idsplit) <- c("organism", "keys", "uniprotKB")
-        data[["pantherId"]] <- NULL
+        data[["dbXref"]] <- NULL
         data[["keys"]] <- idsplit[["keys"]]
         ## Using organism-specific internal return functions here.
         fun <- get(paste("", "PANTHER", camelCase(organism), sep = "."))
@@ -163,21 +166,10 @@ PANTHER <-  # nolint
         keep <- !is.na(data[["geneId"]])
         data <- data[keep, , drop = FALSE]
         data <- unique(data)
-        ## Some organisms have duplicate PANTHER annotations per gene ID.
-        ## FIXME WHICH ORGANISMS? NEED TO HANDLE THIS MORE CLEARLY...
-        if (any(duplicated(data[["geneId"]]))) {
-            split <- split(data, f = data[["geneId"]])
-            assert(is(split, "SplitDataFrameList"))
-            split <- SplitDataFrameList(lapply(
-                X = split,
-                FUN = function(x) {
-                    x <- x[order(x[["pantherSubfamilyId"]]), , drop = FALSE]
-                    x <- x[1L, , drop = FALSE]
-                    x
-                }
-            ))
-            data <- unsplit(split, f = unlist(split[, "geneId"]))
-        }
+        ## NOTE Some organisms have duplicate PANTHER annotations per gene
+        ## identifier. This is the case for Homo sapiens 14.0 release.
+        keep <- !duplicated(data[["geneId"]])
+        data <- data[keep, , drop = FALSE]
         data <- data[order(data[["geneId"]]), , drop = FALSE]
         assert(hasNoDuplicates(data[["geneId"]]))
         alert("Splitting and sorting the GO terms.")
@@ -208,27 +200,14 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## FIXME THIS NEEDS A REWORK.
 ## Updated 2021-03-02.
 .splitPantherTerms <- function(x) {  # nolint
     x <- strsplit(x, split = ";", fixed = TRUE)
     x <- CharacterList(x)
     x <- sort(unique(x))
+    x <- gsub("#([A-Z0-9:]+)", " [\\1]", x)
+    x <- gsub(">", " > ", x)
     x
-
-    ## FIXME RETHINK THIS...USE CHARACTERLIST APPROACH INSTEAD.
-    lapply(
-        X = x,
-        FUN = function(x) {
-            x <- gsub("#([A-Z0-9:]+)", " [\\1]", x)
-            x <- gsub(">", " > ", x)
-            if (hasLength(x)) {
-                x
-            } else {
-                NULL
-            }
-        }
-    )
 }
 
 

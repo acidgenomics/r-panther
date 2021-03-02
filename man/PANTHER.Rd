@@ -23,7 +23,7 @@ server (e.g. \code{"14.0"}).}
 for \strong{P}rotein \strong{AN}alysis \strong{TH}rough \strong{E}volutionary \strong{R}elationships.
 }
 \note{
-Updated 2020-10-12.
+Updated 2021-03-02.
 }
 \section{Suported organisms}{
 

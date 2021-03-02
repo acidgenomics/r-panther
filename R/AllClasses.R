@@ -14,22 +14,26 @@ setClass(
 setValidity(
     Class = "PANTHER",
     method = function(object) {
+        ## PANTHER 16.0+ adds "geneName" column.
         validate(
-            identical(
-                x = colnames(object),
-                y = c(
+            isSubset(
+                x = c(
                     "geneId",
-                    "goBp",  # FIXME Need to deal with this
-                    "goCc",  # FIXME Need to deal with this
-                    "goMf",  # FIXME Need to deal with this
+                    "goBp",
+                    "goCc",
+                    "goMf",
                     "pantherClass",
                     "pantherFamilyName",
                     "pantherPathway",
                     "pantherSubfamilyId",
                     "pantherSubfamilyName"
-                )
+                ),
+                y = colnames(object)
             ),
-            isSubset(c("organism", "release"), names(metadata(object)))
+            isSubset(
+                x = c("organism", "packageVersion", "release"),
+                y = names(metadata(object))
+            )
         )
     }
 )
