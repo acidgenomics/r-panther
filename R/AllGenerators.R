@@ -13,14 +13,11 @@
 #' @param release `character(1)` or `NULL`.
 #'   PANTHER release version. If `NULL`, defaults to current release. Consult
 #'   the PANTHER website for a list of release versions available from the FTP
-#'   server (e.g. `"14.0"`).
+#'   server (e.g. `"16.0"`).
 #'
 #' @examples
-#' ## CPU intensive, so skip for CI checks.
-#' if (!goalie::isDocker()) {
-#'     x <- PANTHER(organism = "Homo sapiens")
-#'     print(x)
-#' }
+#' x <- PANTHER(organism = "Homo sapiens")
+#' print(x)
 NULL
 
 

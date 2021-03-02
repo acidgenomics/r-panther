@@ -13,7 +13,7 @@ Full Latin organism name (e.g. \code{"Homo sapiens"}).}
 \item{release}{\code{character(1)} or \code{NULL}.
 PANTHER release version. If \code{NULL}, defaults to current release. Consult
 the PANTHER website for a list of release versions available from the FTP
-server (e.g. \code{"14.0"}).}
+server (e.g. \code{"16.0"}).}
 }
 \value{
 \code{PANTHER}.
@@ -36,9 +36,6 @@ Updated 2021-03-02.
 }
 
 \examples{
-## CPU intensive, so skip for CI checks.
-if (!goalie::isDocker()) {
-    x <- PANTHER(organism = "Homo sapiens")
-    print(x)
-}
+x <- PANTHER(organism = "Homo sapiens")
+print(x)
 }
