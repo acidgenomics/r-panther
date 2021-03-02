@@ -135,7 +135,6 @@ PANTHER <-  # nolint
                 "pantherPathway"
             )
         }
-        ## FIXME IN PIPETTE, DONT ALLOW A COLUMN NAME LENGTH MISMATCH.
         data <- import(file = file, format = "tsv", colnames = colnames)
         ## Hardening against messed up files (e.g. 15.0 release).
         if (isTRUE(nrow(data) < 5000L)) {
