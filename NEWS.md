@@ -1,3 +1,9 @@
+## PANTHER 0.2.1 (2021-03-12)
+
+### Minor changes
+
+- Updated basejump dependencies, and removed now unnecessary stringr import.
+
 ## PANTHER 0.2.0 (2021-03-02)
 
 ### Major changes
