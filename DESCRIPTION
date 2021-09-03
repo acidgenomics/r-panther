@@ -22,13 +22,11 @@ License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
-    basejump (>= 0.14.17),
-    goalie (>= 0.5.1),
+    basejump (>= 0.14.21.9000),
+    goalie (>= 0.5.4),
     methods
 Suggests:
     testthat
-biocViews:
-    GenomeAnnotation
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Additional_repositories: https://r.acidgenomics.com

@@ -135,7 +135,7 @@ PANTHER <-  # nolint
         data <- import(file = file, format = "tsv", colnames = colnames)
         ## Harden against messed up files (e.g. 15.0 release).
         if (isTRUE(nrow(data) < 5000L)) {
-            stop(sprintf("Invalid URL (missing items): '%s'.", url))
+            abort(sprintf("Invalid URL (missing items): {.url %s}.", url))
         }
         data <- as(data, "DataFrame")
         ## Now using base R methods here instead of `tidyr::separate()`.
