@@ -1,3 +1,11 @@
+## PANTHER 0.2.2 (2021-09-08)
+
+### Minor changes
+
+- Updated basejump dependencies.
+- Removed unnecessary `basejumpTestsURL` from NAMESPACE.
+- Now using `abort` (from AcidCLI via basejump) for error messages.
+
 ## PANTHER 0.2.1 (2021-03-12)
 
 ### Minor changes
