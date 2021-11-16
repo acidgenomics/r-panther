@@ -24,6 +24,6 @@ NULL
 #' @export
 setMethod(
     f = "show",
-    signature = signature("PANTHER"),
+    signature = signature(object = "PANTHER"),
     definition = `show,PANTHER`
 )
