@@ -134,7 +134,12 @@ PANTHER <- # nolint
                 "pantherPathway"
             )
         }
-        data <- import(file = file, format = "tsv", colnames = colnames)
+        data <- import(
+            file = file,
+            format = "tsv",
+            colnames = colnames,
+            engine = "readr"
+        )
         ## Harden against messed up files (e.g. 15.0 release).
         if (isTRUE(nrow(data) < 5000L)) {
             abort(sprintf("Invalid URL (missing items): {.url %s}.", url))
@@ -227,11 +232,11 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2019-08-16.
+## Updated 2022-05-10.
 .PANTHER.caenorhabditisElegans <- # nolint
     function(data) {
-        data[["geneId"]] <- str_extract(
-            string = data[["keys"]],
+        data[["geneId"]] <- stri_extract_first_regex(
+            str = data[["keys"]],
             pattern = "WBGene\\d{8}$"
         )
         data
@@ -239,11 +244,11 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2019-08-16.
+## Updated 2022-05-10.
 .PANTHER.drosophilaMelanogaster <- # nolint
     function(data) {
-        data[["geneId"]] <- str_extract(
-            string = data[["keys"]],
+        data[["geneId"]] <- stri_extract_first_regex(
+            str = data[["keys"]],
             pattern = "FBgn\\d{7}$"
         )
         data
@@ -251,7 +256,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2021-03-02.
+## Updated 2022-05-10.
 .PANTHER.homoSapiens <- # nolint
     function(data) {
         h2e <- HGNC2Ensembl()
@@ -261,18 +266,25 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
         ## Filter Ensembl matches.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"
-        keep <- str_detect(string = ensembl[["keys"]], pattern = pattern)
+        keep <- grepl(
+            pattern = pattern,
+            x = ensembl[["keys"]]
+        )
         ensembl <- ensembl[keep, , drop = FALSE]
-        ensembl[["geneId"]] <-
-            str_extract(string = ensembl[["keys"]], pattern = pattern)
+        ensembl[["geneId"]] <- stri_extract_first_regex(
+            str = ensembl[["keys"]],
+            pattern = pattern
+        )
         ## Filter HGNC matches.
         hgnc <- data
         pattern <- "HGNC=([0-9]+)"
-        keep <- str_detect(string = hgnc[["keys"]], pattern = pattern)
+        keep <- grepl(pattern = pattern, x = hgnc[["keys"]])
         hgnc <- hgnc[keep, , drop = FALSE]
-        hgnc[["hgncId"]] <- as.integer(
-            str_match(string = hgnc[["keys"]], pattern = pattern)[, 2L]
-        )
+        hgnc[["hgncId"]] <- stri_match_first_regex(
+            str = hgnc[["keys"]],
+            pattern = pattern
+        )[, 2L]
+        hgnc[["hgncId"]] <- as.integer(hgnc[["hgncId"]])
         hgnc <- leftJoin(hgnc, h2e, by = "hgncId")
         hgnc[["hgncId"]] <- NULL
         keep <- !is.na(hgnc[["geneId"]])
@@ -284,7 +296,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2021-03-02.
+## Updated 2022-05-10.
 .PANTHER.musMusculus <- # nolint
     function(data) {
         suppressWarnings({
@@ -300,18 +312,22 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
         ## NOTE PANTHER 16.0 doesn't contain any of these.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"
-        keep <- str_detect(string = ensembl[["keys"]], pattern = pattern)
+        keep <- grepl(pattern = pattern, x = ensembl[["keys"]])
         ensembl <- ensembl[keep, , drop = FALSE]
-        ensembl[["geneId"]] <-
-            str_extract(string = ensembl[["keys"]], pattern = pattern)
+        ensembl[["geneId"]] <- stri_extract_first_regex(
+            str = ensembl[["keys"]],
+            pattern = pattern
+        )
         ## Filter MGI matches.
         mgi <- data
         pattern <- "MGI=([0-9]+)"
-        keep <- str_detect(string = mgi[["keys"]], pattern = pattern)
+        keep <- grepl(pattern = pattern, x = mgi[["keys"]])
         mgi <- mgi[keep, , drop = FALSE]
-        mgi[["mgiId"]] <- as.integer(
-            str_match(string = mgi[["keys"]], pattern = pattern)[, 2L]
-        )
+        mgi[["mgiId"]] <- stri_match_first_regex(
+            str = mgi[["keys"]],
+            pattern = pattern
+        )[, 2L]
+        mgi[["mgiId"]] <- as.integer(mgi[["mgiId"]])
         mgi <- leftJoin(mgi, m2e, by = "mgiId")
         mgi[["mgiId"]] <- NULL
         keep <- !is.na(mgi[["geneId"]])
