@@ -1,3 +1,14 @@
+## PANTHER 0.3.0 (2022-05-10)
+
+### Major changes
+
+- Now requiring R 4.2 / Bioconductor 3.15.
+- Added support for PANTHER 17.0 release.
+
+### Minor changes
+
+- Using stringi internally instead of stringr.
+
 ## PANTHER 0.2.2 (2021-09-08)
 
 ### Minor changes
