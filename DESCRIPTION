@@ -22,6 +22,7 @@ License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.2)
 Imports:
+    AcidBase,
     AcidCLI,
     AcidGenerics,
     AcidGenomes,
