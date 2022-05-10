@@ -1,6 +1,6 @@
 #' @name PANTHER
 #' @inherit PANTHER-class title description return
-#' @note Updated 2021-03-02.
+#' @note Updated 2022-05-10.
 #'
 #' @section Suported organisms:
 #'
@@ -14,7 +14,7 @@
 #' @param release `character(1)` or `NULL`.
 #' PANTHER release version. If `NULL`, defaults to current release. Consult
 #' the PANTHER website for a list of release versions available from the FTP
-#' server (e.g. `"16.0"`).
+#' server (e.g. `"17.0"`).
 #'
 #' @examples
 #' x <- PANTHER(organism = "Homo sapiens")
@@ -35,7 +35,7 @@ NULL
 
 #' Supported PANTHER releases
 #'
-#' @note Updated 2021-03-02.
+#' @note Updated 2022-05-10.
 #' @noRd
 #'
 #' @details
@@ -61,8 +61,9 @@ NULL
     "13.1",
     "14.0",
     "14.1",
-    "15.0", # This is messed up on the FTP server?
-    "16.0"
+    "15.0", # Messed up on the FTP server?
+    "16.0",
+    "17.0" # 2022-02-22
 )
 
 

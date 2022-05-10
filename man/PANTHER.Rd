@@ -4,7 +4,7 @@
 \alias{PANTHER}
 \title{PANTHER database annotations}
 \usage{
-PANTHER(organism, release = "16.0")
+PANTHER(organism, release = "17.0")
 }
 \arguments{
 \item{organism}{\code{character(1)}.
@@ -13,7 +13,7 @@ Full Latin organism name (e.g. \code{"Homo sapiens"}).}
 \item{release}{\code{character(1)} or \code{NULL}.
 PANTHER release version. If \code{NULL}, defaults to current release. Consult
 the PANTHER website for a list of release versions available from the FTP
-server (e.g. \code{"16.0"}).}
+server (e.g. \code{"17.0"}).}
 }
 \value{
 \code{PANTHER}.
@@ -23,7 +23,7 @@ server (e.g. \code{"16.0"}).}
 for \strong{P}rotein \strong{AN}alysis \strong{TH}rough \strong{E}volutionary \strong{R}elationships.
 }
 \note{
-Updated 2021-03-02.
+Updated 2022-05-10.
 }
 \section{Suported organisms}{
 

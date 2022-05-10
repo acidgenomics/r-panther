@@ -33,15 +33,7 @@ NULL
 #' @importFrom S4Vectors DataFrame SimpleList
 #' @importFrom methods as is new setClass setValidity
 #' @importFrom pipette cacheURL
-#' @importFrom utils packageName packageVersion
-NULL
-
-
-
-## FIXME Rework these using stringi.
-#' @importFrom stringr str_detect str_extract str_match
-NULL
-
 #' @importFrom stringi stri_detect stri_extract_first_regex
 #' stri_match_first_regex
+#' @importFrom utils packageName packageVersion
 NULL
