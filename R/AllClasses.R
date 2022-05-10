@@ -3,13 +3,13 @@
 #' [PANTHER](http://www.pantherdb.org) gene ontology definitions. PANTHER stands
 #' for **P**rotein **AN**alysis **TH**rough **E**volutionary **R**elationships.
 #'
-#' @note Updated 2019-08-08.
+#' @note Updated 2022-05-10.
 #' @export
 #'
 #' @return `PANTHER`.
 setClass(
     Class = "PANTHER",
-    contains = "DataFrame"
+    contains = "DFrame"
 )
 setValidity(
     Class = "PANTHER",

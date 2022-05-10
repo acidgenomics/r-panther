@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.2.2
-Date: 2021-09-08
+Version: 0.3.0
+Date: 2022-05-10
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -20,11 +20,21 @@ URL:
 BugReports: https://github.com/acidgenomics/r-panther/issues/
 License: AGPL-3
 Encoding: UTF-8
-Depends: R (>= 4.0)
+Depends: R (>= 4.2)
 Imports:
-    basejump (>= 0.14.22),
-    goalie (>= 0.5.4),
-    methods
+    AcidCLI,
+    AcidGenerics,
+    AcidGenomes,
+    AcidPlyr,
+    BiocGenerics,
+    IRanges,
+    S4Vectors,
+    goalie,
+    methods,
+    pipette,
+    stringi,
+    syntactic,
+    utils
 Suggests:
     testthat
 Roxygen: list(markdown = TRUE)

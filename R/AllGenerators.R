@@ -209,7 +209,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 
-## Updated 2021-03-02.
+## Updated 2022-05-10.
 .splitPantherTerms <- function(x) {  # nolint
     ## e.g. for C. elegans 13.1 release file.
     if (all(is.na(x))) {
@@ -218,8 +218,8 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
     x <- strsplit(x, split = ";", fixed = TRUE)
     x <- CharacterList(x)
     x <- sort(unique(x))
-    x <- gsub("#([A-Z0-9:]+)", " [\\1]", x)
-    x <- gsub(">", " > ", x)
+    x <- gsub(pattern = "#([A-Z0-9:]+)", replacement = " [\\1]", x = x)
+    x <- gsub(pattern = ">", replacement = " > ", x = x)
     x
 }
 
