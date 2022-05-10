@@ -117,3 +117,21 @@ test_that("PANTHER : 16.0", {
         SIMPLIFY = FALSE
     )
 })
+
+test_that("PANTHER : 17.0", {
+    mapply(
+        organism = organisms,
+        nrow = c(
+            "Caenorhabditis elegans" = 14447L,
+            "Drosophila melanogaster" = 11033L,
+            "Homo sapiens" = 19343L,
+            "Mus musculus" = 20862L
+        ),
+        FUN = function(organism, nrow) {
+            object <- PANTHER(organism = organism, release = "17.0")
+            expect_s4_class(object, "PANTHER")
+            expect_identical(nrow(object), nrow)
+        },
+        SIMPLIFY = FALSE
+    )
+})
