@@ -10,10 +10,11 @@
 #' - *Mus musculus*
 #'
 #' @inheritParams AcidRoxygen::params
+#'
 #' @param release `character(1)` or `NULL`.
-#'   PANTHER release version. If `NULL`, defaults to current release. Consult
-#'   the PANTHER website for a list of release versions available from the FTP
-#'   server (e.g. `"16.0"`).
+#' PANTHER release version. If `NULL`, defaults to current release. Consult
+#' the PANTHER website for a list of release versions available from the FTP
+#' server (e.g. `"16.0"`).
 #'
 #' @examples
 #' x <- PANTHER(organism = "Homo sapiens")
@@ -42,9 +43,9 @@ NULL
 #'
 #' ```r
 #' url <- pasteURL(
-#'     "ftp.pantherdb.org",
-#'     "sequence_classifications",
-#'     protocol = "ftp"
+#' "ftp.pantherdb.org",
+#' "sequence_classifications",
+#' protocol = "ftp"
 #' )
 #' x <- RCurl::getURL(url = paste0(url, "/"), dirlistonly = TRUE)
 #' x <- strsplit(x, split = "\n", fixed = TRUE)
@@ -60,7 +61,7 @@ NULL
     "13.1",
     "14.0",
     "14.1",
-    "15.0",  # This is messed up on the FTP server?
+    "15.0", # This is messed up on the FTP server?
     "16.0"
 )
 
@@ -68,7 +69,7 @@ NULL
 
 #' @rdname PANTHER
 #' @export
-PANTHER <-  # nolint
+PANTHER <- # nolint
     function(organism, release) {
         if (is.null(release)) {
             release <- tail(.pantherReleases, n = 1L)
@@ -210,7 +211,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 ## Updated 2022-05-10.
-.splitPantherTerms <- function(x) {  # nolint
+.splitPantherTerms <- function(x) { # nolint
     ## e.g. for C. elegans 13.1 release file.
     if (all(is.na(x))) {
         return(x)
@@ -226,7 +227,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 ## Updated 2019-08-16.
-.PANTHER.caenorhabditisElegans <-  # nolint
+.PANTHER.caenorhabditisElegans <- # nolint
     function(data) {
         data[["geneId"]] <- str_extract(
             string = data[["keys"]],
@@ -238,7 +239,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 ## Updated 2019-08-16.
-.PANTHER.drosophilaMelanogaster <-  # nolint
+.PANTHER.drosophilaMelanogaster <- # nolint
     function(data) {
         data[["geneId"]] <- str_extract(
             string = data[["keys"]],
@@ -250,7 +251,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 ## Updated 2021-03-02.
-.PANTHER.homoSapiens <-  # nolint
+.PANTHER.homoSapiens <- # nolint
     function(data) {
         h2e <- HGNC2Ensembl()
         assert(identical(colnames(h2e), c("hgncId", "ensemblId")))
@@ -283,7 +284,7 @@ formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
 
 
 ## Updated 2021-03-02.
-.PANTHER.musMusculus <-  # nolint
+.PANTHER.musMusculus <- # nolint
     function(data) {
         suppressWarnings({
             m2e <- MGI2Ensembl()

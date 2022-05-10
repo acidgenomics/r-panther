@@ -8,7 +8,7 @@ NULL
 
 
 ## Updated 2019-07-22.
-`show,PANTHER` <-  # nolint
+`show,PANTHER` <- # nolint
     function(object) {
         showHeader(object)
         showSlotInfo(list(
