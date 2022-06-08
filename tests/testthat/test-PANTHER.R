@@ -1,7 +1,3 @@
-context("PANTHER")
-
-skip_if_not(hasInternet())
-
 test_that("organism", {
     for (organism in names(.pantherMappings)) {
         invisible(capture.output({

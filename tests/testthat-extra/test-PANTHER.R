@@ -1,5 +1,3 @@
-context("extra | PANTHER")
-
 organisms <- sort(names(.pantherMappings))
 
 ## Here's how to obtain supported releases.
