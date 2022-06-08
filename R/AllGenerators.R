@@ -212,7 +212,8 @@ PANTHER <- # nolint
         new(Class = "PANTHER", data)
     }
 
-formals(PANTHER)[["release"]] <- tail(.pantherReleases, n = 1L)
+formals(PANTHER)[["release"]] <- # nolint
+    tail(.pantherReleases, n = 1L)
 
 
 
