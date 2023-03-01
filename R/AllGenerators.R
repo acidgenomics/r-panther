@@ -258,11 +258,11 @@ formals(PANTHER)[["release"]] <- # nolint
 .PANTHER.homoSapiens <- # nolint
     function(data) {
         alert("Mapping HGNC identifiers to Ensembl.")
-        hgnc <- HGNC()
-        hgnc <- as(hgnc, "DataFrame")
+        h2e <- HGNC()
+        h2e <- as(h2e, "DataFrame")
         cols <- c("hgncId", "ensemblGeneId")
-        assert(isSubset(cols, colnames(hgnc)))
-        h2e <- hgnc[, cols]
+        assert(isSubset(cols, colnames(h2e)))
+        h2e <- h2e[, cols]
         h2e <- h2e[complete.cases(h2e), , drop = FALSE]
         ## Filter Ensembl matches.
         ensembl <- data
