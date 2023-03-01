@@ -8,7 +8,6 @@ NULL
 ## S4 generics and methods =====================================================
 
 #' @importFrom AcidGenerics camelCase leftJoin mutateAt showHeader
-#' @importFrom AcidGenomes HGNC2Ensembl MGI2Ensembl
 #' @importFrom BiocGenerics do.call lapply rbind sort unique unlist unsplit
 #' @importFrom IRanges gsub
 #' @importFrom S4Vectors head metadata metadata<- split tail

@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.3.0
-Date: 2022-05-10
+Version: 0.3.1.9000
+Date: 2023-03-01
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -22,23 +22,23 @@ License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.2)
 Imports:
-    AcidBase,
-    AcidCLI,
-    AcidGenerics,
-    AcidGenomes,
-    AcidPlyr,
-    BiocGenerics,
-    IRanges,
-    S4Vectors,
-    goalie,
+    AcidBase (>= 0.6.12),
+    AcidCLI (>= 0.2.7),
+    AcidGenerics (>= 0.6.7),
+    AcidGenomes (>= 0.4.9),
+    AcidPlyr (>= 0.3.7),
+    BiocGenerics (>= 0.44.0),
+    IRanges (>= 2.32.0),
+    S4Vectors (>= 0.36.0),
+    goalie (>= 0.6.8),
+    pipette (>= 0.10.4),
+    stringi (>= 1.7.12),
+    syntactic (>= 0.6.4),
     methods,
-    pipette,
-    stringi,
-    syntactic,
     utils
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.1.6)
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3

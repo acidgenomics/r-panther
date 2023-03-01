@@ -1,6 +1,6 @@
 #' @name PANTHER
 #' @inherit PANTHER-class title description return
-#' @note Updated 2022-05-10.
+#' @note Updated 2023-03-01.
 #'
 #' @section Suported organisms:
 #'
@@ -135,7 +135,7 @@ PANTHER <- # nolint
             )
         }
         data <- import(
-            file = file,
+            con = file,
             format = "tsv",
             colnames = colnames,
             engine = "readr"
@@ -150,6 +150,7 @@ PANTHER <- # nolint
             what = rbind,
             args = strsplit(data[["dbXref"]], split = "|", fixed = TRUE)
         ))
+        ## FIXME Improve strict camel case here -- use "uniprotKb" instead.
         colnames(idsplit) <- c("organism", "keys", "uniprotKB")
         data[["dbXref"]] <- NULL
         data[["keys"]] <- idsplit[["keys"]]
@@ -260,6 +261,7 @@ formals(PANTHER)[["release"]] <- # nolint
 ## Updated 2022-05-10.
 .PANTHER.homoSapiens <- # nolint
     function(data) {
+        ## FIXME Need to rework this.
         h2e <- HGNC2Ensembl()
         assert(identical(colnames(h2e), c("hgncId", "ensemblId")))
         h2e <- as(h2e, "DataFrame")
@@ -300,6 +302,7 @@ formals(PANTHER)[["release"]] <- # nolint
 ## Updated 2022-05-10.
 .PANTHER.musMusculus <- # nolint
     function(data) {
+        ## FIXME Need to rework this.
         suppressWarnings({
             m2e <- MGI2Ensembl()
         })
