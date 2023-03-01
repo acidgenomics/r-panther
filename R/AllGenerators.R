@@ -35,7 +35,7 @@ NULL
 
 #' Supported PANTHER releases
 #'
-#' @note Updated 2022-05-10.
+#' @note Updated 2023-03-01.
 #' @noRd
 #'
 #' @details
@@ -55,15 +55,15 @@ NULL
 #' ftp://ftp.pantherdb.org/sequence_classifications/16.0/README
 ## nolint end
 .pantherReleases <- c(
-    "11.0",
-    "12.0",
-    "13.0",
-    "13.1",
-    "14.0",
-    "14.1",
-    "15.0", # Messed up on the FTP server?
+    "17.0",
     "16.0",
-    "17.0" # 2022-02-22
+    "15.0",
+    "14.1",
+    "14.0",
+    "13.1",
+    "13.0",
+    "12.0",
+    "11.0"
 )
 
 
@@ -72,9 +72,6 @@ NULL
 #' @export
 PANTHER <- # nolint
     function(organism, release) {
-        if (is.null(release)) {
-            release <- tail(.pantherReleases, n = 1L)
-        }
         assert(
             hasInternet(),
             isOrganism(organism),
@@ -214,7 +211,7 @@ PANTHER <- # nolint
     }
 
 formals(PANTHER)[["release"]] <- # nolint
-    tail(.pantherReleases, n = 1L)
+    .pantherReleases[[1L]]
 
 
 
