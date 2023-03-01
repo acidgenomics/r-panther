@@ -146,8 +146,7 @@ PANTHER <- # nolint
             what = rbind,
             args = strsplit(data[["dbXref"]], split = "|", fixed = TRUE)
         ))
-        ## FIXME Improve strict camel case here -- use "uniprotKb" instead.
-        colnames(idsplit) <- c("organism", "keys", "uniprotKB")
+        colnames(idsplit) <- c("organism", "keys", "uniprotId")
         data[["dbXref"]] <- NULL
         data[["keys"]] <- idsplit[["keys"]]
         ## Using organism-specific internal return functions here.
