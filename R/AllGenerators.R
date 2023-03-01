@@ -256,7 +256,6 @@ formals(PANTHER)[["release"]] <- # nolint
 ## Updated 2023-03-01.
 .PANTHER.homoSapiens <- # nolint
     function(data) {
-        ## FIXME Need to rework the geneId column handling here.
         h2e <- HGNC()
         h2e <- as(h2e, "DataFrame")
         cols <- c("hgncId", "ensemblGeneId")
