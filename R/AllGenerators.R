@@ -90,8 +90,7 @@ PANTHER <- # nolint
         assert(isString(pantherName))
         alert(sprintf(
             "Downloading PANTHER %s annotations for {.emph %s}.",
-            as.character(release),
-            organism
+            as.character(release), organism
         ))
         url <- pasteURL(
             "ftp.pantherdb.org",
@@ -255,14 +254,16 @@ formals(PANTHER)[["release"]] <- # nolint
 
 
 
-## Updated 2022-05-10.
+## Updated 2023-03-01.
 .PANTHER.homoSapiens <- # nolint
     function(data) {
-        ## FIXME Need to rework this.
-        h2e <- HGNC2Ensembl()
-        assert(identical(colnames(h2e), c("hgncId", "ensemblId")))
-        h2e <- as(h2e, "DataFrame")
-        colnames(h2e)[colnames(h2e) == "ensemblId"] <- "geneId"
+        alert("Mapping HGNC identifiers to Ensembl.")
+        hgnc <- HGNC()
+        hgnc <- as(hgnc, "DataFrame")
+        cols <- c("hgncId", "ensemblGeneId")
+        assert(isSubset(cols, colnames(hgnc)))
+        h2e <- hgnc[, cols]
+        h2e <- h2e[complete.cases(h2e), , drop = FALSE]
         ## Filter Ensembl matches.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"

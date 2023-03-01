@@ -10,7 +10,7 @@ NULL
 #' @importFrom AcidGenerics camelCase leftJoin mutateAt showHeader
 #' @importFrom BiocGenerics do.call lapply rbind sort unique unlist unsplit
 #' @importFrom IRanges gsub
-#' @importFrom S4Vectors head metadata metadata<- split tail
+#' @importFrom S4Vectors complete.cases head metadata metadata<- split tail
 #' @importFrom methods show
 #' @importFrom pipette import
 #'
@@ -26,6 +26,7 @@ NULL
 
 #' @importFrom AcidBase pasteURL showSlotInfo
 #' @importFrom AcidCLI abort alert alertWarning
+#' @importFrom AcidGenomes HGNC MGI
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
 #' isOrganism isString isSubset validate
 #' @importFrom IRanges CharacterList SplitDataFrameList
