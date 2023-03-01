@@ -257,13 +257,14 @@ formals(PANTHER)[["release"]] <- # nolint
 ## Updated 2023-03-01.
 .PANTHER.homoSapiens <- # nolint
     function(data) {
-        alert("Mapping HGNC identifiers to Ensembl.")
+        ## FIXME Need to rework the geneId column handling here.
         h2e <- HGNC()
         h2e <- as(h2e, "DataFrame")
         cols <- c("hgncId", "ensemblGeneId")
         assert(isSubset(cols, colnames(h2e)))
         h2e <- h2e[, cols]
         h2e <- h2e[complete.cases(h2e), , drop = FALSE]
+        colnames(h2e)[colnames(h2e) == "ensemblGeneId"] <- "geneId"
         ## Filter Ensembl matches.
         ensembl <- data
         pattern <- "ENSG[0-9]{11}"
@@ -297,19 +298,17 @@ formals(PANTHER)[["release"]] <- # nolint
 
 
 
-## Updated 2022-05-10.
+## Updated 2023-03-01.
 .PANTHER.musMusculus <- # nolint
     function(data) {
-        ## FIXME Need to rework this.
-        suppressWarnings({
-            m2e <- MGI2Ensembl()
-        })
-        assert(
-            is(m2e, "MGI2Ensembl"),
-            identical(colnames(m2e), c("mgiId", "ensemblId"))
-        )
+        m2e <- MGI()
         m2e <- as(m2e, "DataFrame")
-        colnames(m2e)[colnames(m2e) == "ensemblId"] <- "geneId"
+        cols <- c("mgiAccessionId", "ensemblGeneId")
+        assert(isSubset(cols, colnames(m2e)))
+        m2e <- m2e[, cols]
+        m2e <- m2e[complete.cases(m2e), , drop = FALSE]
+        colnames(m2e)[colnames(m2e) == "mgiAccessionId"] <- "mgiId"
+        colnames(m2e)[colnames(m2e) == "ensemblGeneId"] <- "geneId"
         ## Filter Ensembl matches.
         ## NOTE PANTHER 16.0 doesn't contain any of these.
         ensembl <- data
