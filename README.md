@@ -15,15 +15,16 @@ install.packages(
     repos = c(
         "https://r.acidgenomics.com",
         BiocManager::repositories()
-    )
+    ),
+    dependencies = TRUE
 )
 ```
 
 ### [Docker][] method
 
 ```sh
-image="acidgenomics/r-panther"
-workdir="/mnt/work"
+image='acidgenomics/r-packages:panther'
+workdir='/mnt/work'
 docker pull "$image"
 docker run -it \
     --volume="${PWD}:${workdir}" \
