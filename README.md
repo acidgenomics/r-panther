@@ -1,5 +1,7 @@
 # PANTHER
 
+![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)
+
 [PANTHER][] database annotations.
 
 ## Installation

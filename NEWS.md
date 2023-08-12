@@ -1,3 +1,14 @@
+# PANTHER 0.4.0 (2023-08-12)
+
+## Major changes
+
+- Now requiring R 4.3 / Bioconductor 3.17.
+
+## Minor changes
+
+- Reworked main `PANTHER` generator to work with updates in pipette and
+  AcidGenomes packages.
+
 # PANTHER 0.3.0 (2022-05-10)
 
 ## Major changes
