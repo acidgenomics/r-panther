@@ -22,5 +22,19 @@ install.packages(
 )
 ```
 
+### [Conda][] method
+
+Configure [Conda][] to use the [Bioconda][] channels.
+
+```sh
+# Don't install recipe into base environment.
+name='r-panther'
+conda create --name="$name" "$name"
+conda activate "$name"
+R
+```
+
+[bioconda]: https://bioconda.github.io/
+[conda]: https://conda.io/
 [panther]: http://www.pantherdb.org/
 [r]: https://www.r-project.org/
