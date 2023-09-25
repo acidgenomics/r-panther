@@ -130,12 +130,7 @@ PANTHER <- # nolint
                 "pantherPathway"
             )
         }
-        data <- import(
-            con = file,
-            format = "tsv",
-            colnames = colnames,
-            engine = "readr"
-        )
+        data <- import(con = file, format = "tsv", colnames = colnames)
         ## Harden against messed up files (e.g. 15.0 release).
         if (isTRUE(nrow(data) < 5000L)) {
             abort(sprintf("Invalid URL (missing items): {.url %s}.", url))
