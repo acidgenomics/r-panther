@@ -1,5 +1,12 @@
 # Release notes
 
+## PANTHER 0.4.1 (UNRELEASED)
+
+Minor changes:
+
+- Now using AcidBase string splitting functions internally instead of stringi.
+- No longer requiring readr engine for primary generator.
+
 ## PANTHER 0.4.0 (2023-08-12)
 
 Major changes:
