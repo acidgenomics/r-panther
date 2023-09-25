@@ -24,7 +24,7 @@ NULL
 
 ## Standard functions ==========================================================
 
-#' @importFrom AcidBase pasteURL showSlotInfo
+#' @importFrom AcidBase pasteURL showSlotInfo strExtract strMatch
 #' @importFrom AcidCLI abort alert alertWarning
 #' @importFrom AcidGenomes HGNC MGI
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows

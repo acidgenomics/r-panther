@@ -1,10 +1,6 @@
-## FIXME Replace "stri_" usage with AcidBase variants.
-
-
-
 #' @name PANTHER
 #' @inherit PANTHER-class title description return
-#' @note Updated 2023-03-01.
+#' @note Updated 2023-09-25.
 #'
 #' @section Suported organisms:
 #'
@@ -233,24 +229,26 @@ formals(PANTHER)[["release"]] <- # nolint
 
 
 
-## Updated 2022-05-10.
+## Updated 2023-09-25.
 .PANTHER.caenorhabditisElegans <- # nolint
     function(data) {
-        data[["geneId"]] <- stri_extract_first_regex(
-            str = data[["keys"]],
-            pattern = "WBGene\\d{8}$"
+        data[["geneId"]] <- strExtract(
+            x = data[["keys"]],
+            pattern = "WBGene\\d{8}$",
+            fixed = FALSE
         )
         data
     }
 
 
 
-## Updated 2022-05-10.
+## Updated 2023-09-25.
 .PANTHER.drosophilaMelanogaster <- # nolint
     function(data) {
-        data[["geneId"]] <- stri_extract_first_regex(
-            str = data[["keys"]],
-            pattern = "FBgn\\d{7}$"
+        data[["geneId"]] <- strExtract(
+            x = data[["keys"]],
+            pattern = "FBgn\\d{7}$",
+            fixed = FALSE
         )
         data
     }
@@ -275,18 +273,20 @@ formals(PANTHER)[["release"]] <- # nolint
             x = ensembl[["keys"]]
         )
         ensembl <- ensembl[keep, , drop = FALSE]
-        ensembl[["geneId"]] <- stri_extract_first_regex(
-            str = ensembl[["keys"]],
-            pattern = pattern
+        ensembl[["geneId"]] <- strExtract(
+            x = ensembl[["keys"]],
+            pattern = pattern,
+            fixed = FALSE
         )
         ## Filter HGNC matches.
         hgnc <- data
         pattern <- "HGNC=([0-9]+)"
         keep <- grepl(pattern = pattern, x = hgnc[["keys"]])
         hgnc <- hgnc[keep, , drop = FALSE]
-        hgnc[["hgncId"]] <- stri_match_first_regex(
-            str = hgnc[["keys"]],
-            pattern = pattern
+        hgnc[["hgncId"]] <- strMatch(
+            x = hgnc[["keys"]],
+            pattern = pattern,
+            fixed = FALSE
         )[, 2L]
         hgnc[["hgncId"]] <- as.integer(hgnc[["hgncId"]])
         hgnc <- leftJoin(hgnc, h2e, by = "hgncId")
@@ -317,18 +317,20 @@ formals(PANTHER)[["release"]] <- # nolint
         pattern <- "ENSG[0-9]{11}"
         keep <- grepl(pattern = pattern, x = ensembl[["keys"]])
         ensembl <- ensembl[keep, , drop = FALSE]
-        ensembl[["geneId"]] <- stri_extract_first_regex(
-            str = ensembl[["keys"]],
-            pattern = pattern
+        ensembl[["geneId"]] <- strExtract(
+            x = ensembl[["keys"]],
+            pattern = pattern,
+            fixed = FALSE
         )
         ## Filter MGI matches.
         mgi <- data
         pattern <- "MGI=([0-9]+)"
         keep <- grepl(pattern = pattern, x = mgi[["keys"]])
         mgi <- mgi[keep, , drop = FALSE]
-        mgi[["mgiId"]] <- stri_match_first_regex(
-            str = mgi[["keys"]],
-            pattern = pattern
+        mgi[["mgiId"]] <- strMatch(
+            x = mgi[["keys"]],
+            pattern = pattern,
+            fixed = FALSE
         )[, 2L]
         mgi[["mgiId"]] <- as.integer(mgi[["mgiId"]])
         mgi <- leftJoin(mgi, m2e, by = "mgiId")

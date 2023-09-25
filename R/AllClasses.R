@@ -3,7 +3,7 @@
 #' [PANTHER](http://www.pantherdb.org) gene ontology definitions. PANTHER stands
 #' for **P**rotein **AN**alysis **TH**rough **E**volutionary **R**elationships.
 #'
-#' @note Updated 2022-05-10.
+#' @note Updated 2023-09-25.
 #' @export
 #'
 #' @return `PANTHER`.
