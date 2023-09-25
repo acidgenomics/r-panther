@@ -1,8 +1,8 @@
 Package: PANTHER
 Title: PANTHER
 Description: PANTHER database annotations.
-Version: 0.4.0
-Date: 2023-08-12
+Version: 0.4.1.9000
+Date: 2023-09-25
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -32,7 +32,6 @@ Imports:
     S4Vectors (>= 0.38.0),
     goalie (>= 0.6.14),
     pipette (>= 0.11.1),
-    stringi (>= 1.7.12),
     syntactic (>= 0.6.6),
     methods,
     utils
@@ -43,3 +42,4 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+biocViews: GeneSetEnrichment

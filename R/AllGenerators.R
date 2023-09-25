@@ -1,3 +1,7 @@
+## FIXME Replace "stri_" usage with AcidBase variants.
+
+
+
 #' @name PANTHER
 #' @inherit PANTHER-class title description return
 #' @note Updated 2023-03-01.
