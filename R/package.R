@@ -20,13 +20,14 @@ NULL
 #' @importFrom AcidGenerics camelCase leftJoin mutateAt showHeader
 #' @importFrom BiocGenerics do.call lapply rbind sort unique unlist unsplit
 #' @importFrom IRanges gsub
-#' @importFrom S4Vectors complete.cases head metadata metadata<- split tail
+#' @importFrom S4Vectors complete.cases decode head metadata metadata<- split
+#' tail
 #' @importFrom methods show
 #' @importFrom pipette import
 #'
 #' @importMethodsFrom AcidBase showHeader
 #' @importMethodsFrom AcidPlyr leftJoin mutateAt
-#' @importMethodsFrom pipette import
+#' @importMethodsFrom pipette decode import
 #' @importMethodsFrom syntactic camelCase
 NULL
 

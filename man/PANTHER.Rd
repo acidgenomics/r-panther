@@ -4,7 +4,7 @@
 \alias{PANTHER}
 \title{PANTHER database annotations}
 \usage{
-PANTHER(organism, release = "17.0")
+PANTHER(organism, release = "18.0")
 }
 \arguments{
 \item{organism}{\code{character(1)}.

@@ -55,6 +55,7 @@ NULL
 #' ftp://ftp.pantherdb.org/sequence_classifications/16.0/README
 ## nolint end
 .pantherReleases <- c(
+    "18.0",
     "17.0",
     "16.0",
     "15.0",
@@ -131,10 +132,10 @@ PANTHER <- # nolint
             )
         }
         data <- import(con = file, format = "tsv", colnames = colnames)
-        ## Harden against messed up files (e.g. 15.0 release).
-        if (isTRUE(nrow(data) < 5000L)) {
-            abort(sprintf("Invalid URL (missing items): {.url %s}.", url))
-        }
+        assert(
+            nrow(data) >= 5000L,
+            msg = sprintf("Invalid URL: {.url %s}.", url)
+        )
         data <- as(data, "DataFrame")
         ## Now using base R methods here instead of `tidyr::separate()`.
         idsplit <- DataFrame(do.call(
@@ -295,7 +296,7 @@ formals(PANTHER)[["release"]] <- # nolint
 
 
 
-## Updated 2023-03-01.
+## Updated 2023-09-25.
 .PANTHER.musMusculus <- # nolint
     function(data) {
         m2e <- MGI()
@@ -303,6 +304,7 @@ formals(PANTHER)[["release"]] <- # nolint
         cols <- c("mgiAccessionId", "ensemblGeneId")
         assert(isSubset(cols, colnames(m2e)))
         m2e <- m2e[, cols]
+        m2e <- decode(m2e)
         m2e <- m2e[complete.cases(m2e), , drop = FALSE]
         colnames(m2e)[colnames(m2e) == "mgiAccessionId"] <- "mgiId"
         colnames(m2e)[colnames(m2e) == "ensemblGeneId"] <- "geneId"

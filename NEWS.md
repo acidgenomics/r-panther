@@ -2,10 +2,15 @@
 
 ## PANTHER 0.4.1 (UNRELEASED)
 
+Major changes:
+
+- Added support for new 18.0 release.
+
 Minor changes:
 
 - Now using AcidBase string splitting functions internally instead of stringi.
 - No longer requiring readr engine for primary generator.
+- Need to decode MGI annotations for mouse.
 
 ## PANTHER 0.4.0 (2023-08-12)
 
