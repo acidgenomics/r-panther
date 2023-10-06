@@ -1,6 +1,6 @@
 # Release notes
 
-## PANTHER 0.4.1 (2023-10-06)
+## PANTHER 0.5.0 (2023-10-06)
 
 Major changes:
 
