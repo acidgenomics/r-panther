@@ -1,10 +1,12 @@
 # Release notes
 
-## PANTHER 0.4.1 (UNRELEASED)
+## PANTHER 0.4.1 (2023-10-06)
 
 Major changes:
 
 - Added support for new 18.0 release.
+- Updated Acid Genomics dependencies. Note that imports now consistently use
+  strict camel case for function names.
 
 Minor changes:
 
