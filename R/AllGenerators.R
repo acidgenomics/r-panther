@@ -42,7 +42,7 @@ NULL
 #' Release versions are here:
 #'
 #' ```r
-#' url <- pasteURL(
+#' url <- pasteUrl(
 #' "ftp.pantherdb.org",
 #' "sequence_classifications",
 #' protocol = "ftp"
@@ -93,7 +93,7 @@ PANTHER <- # nolint
             "Downloading PANTHER %s annotations for {.emph %s}.",
             as.character(release), organism
         ))
-        url <- pasteURL(
+        url <- pasteUrl(
             "ftp.pantherdb.org",
             "sequence_classifications",
             as.character(release),
@@ -101,7 +101,7 @@ PANTHER <- # nolint
             paste0("PTHR", release, "_", pantherName),
             protocol = "ftp"
         )
-        file <- cacheURL(url = url, pkg = .pkgName)
+        file <- cacheUrl(url = url, pkg = .pkgName)
         if (isTRUE(release < 16L)) {
             ## The "geneName" column is not defined in older releases.
             colnames <- c(
@@ -251,10 +251,10 @@ formals(PANTHER)[["release"]] <- # nolint
 
 
 
-## Updated 2023-03-01.
+## Updated 2023-10-06.
 .PANTHER.homoSapiens <- # nolint
     function(data) {
-        h2e <- HGNC()
+        h2e <- Hgnc()
         h2e <- as(h2e, "DataFrame")
         cols <- c("hgncId", "ensemblGeneId")
         assert(isSubset(cols, colnames(h2e)))
@@ -299,7 +299,7 @@ formals(PANTHER)[["release"]] <- # nolint
 ## Updated 2023-09-25.
 .PANTHER.musMusculus <- # nolint
     function(data) {
-        m2e <- MGI()
+        m2e <- Mgi()
         m2e <- as(m2e, "DataFrame")
         cols <- c("mgiAccessionId", "ensemblGeneId")
         assert(isSubset(cols, colnames(m2e)))

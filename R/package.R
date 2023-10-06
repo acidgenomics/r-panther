@@ -35,14 +35,14 @@ NULL
 
 ## Standard functions ==========================================================
 
-#' @importFrom AcidBase pasteURL showSlotInfo strExtract strMatch
+#' @importFrom AcidBase pasteUrl showSlotInfo strExtract strMatch
 #' @importFrom AcidCLI abort alert alertWarning
-#' @importFrom AcidGenomes HGNC MGI
+#' @importFrom AcidGenomes Hgnc Mgi
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
 #' isOrganism isString isSubset validate
 #' @importFrom IRanges CharacterList SplitDataFrameList
 #' @importFrom S4Vectors DataFrame SimpleList
 #' @importFrom methods as is new setClass setValidity
-#' @importFrom pipette cacheURL
+#' @importFrom pipette cacheUrl
 #' @importFrom utils packageName packageVersion
 NULL
