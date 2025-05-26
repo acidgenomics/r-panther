@@ -1,6 +1,6 @@
 #' @name PANTHER
 #' @inherit PANTHER-class title description return
-#' @note Updated 2023-09-25.
+#' @note Updated 2025-05-25.
 #'
 #' @section Suported organisms:
 #'
@@ -101,7 +101,7 @@ PANTHER <- # nolint
             protocol = "ftp"
         )
         file <- cacheUrl(url = url, pkg = .pkgName)
-        if (isTRUE(release < 16L)) {
+        if (isTRUE(release < numeric_version("16.0"))) {
             ## The "geneName" column is not defined in older releases.
             colnames <- c(
                 "dbXref",
