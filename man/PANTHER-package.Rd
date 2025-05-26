@@ -2,6 +2,7 @@
 % Please edit documentation in R/package.R
 \docType{package}
 \name{PANTHER-package}
+\alias{PANTHER-package}
 \title{PANTHER}
 \description{
 PANTHER database annotations.

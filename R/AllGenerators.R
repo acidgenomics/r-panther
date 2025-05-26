@@ -22,7 +22,6 @@
 NULL
 
 
-
 ## Updated 2020-10-12.
 .pantherMappings <- c(
     "Homo sapiens" = "human",
@@ -30,7 +29,6 @@ NULL
     "Caenorhabditis elegans" = "nematode_worm",
     "Drosophila melanogaster" = "fruit_fly"
 )
-
 
 
 #' Supported PANTHER releases
@@ -68,7 +66,6 @@ NULL
 )
 
 
-
 #' @rdname PANTHER
 #' @export
 PANTHER <- # nolint
@@ -91,7 +88,8 @@ PANTHER <- # nolint
         assert(isString(pantherName))
         alert(sprintf(
             "Downloading PANTHER %s annotations for {.emph %s}.",
-            as.character(release), organism
+            as.character(release),
+            organism
         ))
         url <- pasteUrl(
             "ftp.pantherdb.org",
@@ -208,9 +206,9 @@ formals(PANTHER)[["release"]] <- # nolint
     .pantherReleases[[1L]]
 
 
-
 ## Updated 2022-05-10.
-.splitPantherTerms <- function(x) { # nolint
+.splitPantherTerms <- function(x) {
+    # nolint
     ## e.g. for C. elegans 13.1 release file.
     if (all(is.na(x))) {
         return(x)
@@ -222,7 +220,6 @@ formals(PANTHER)[["release"]] <- # nolint
     x <- gsub(pattern = ">", replacement = " > ", x = x)
     x
 }
-
 
 
 ## Updated 2023-09-25.
@@ -237,7 +234,6 @@ formals(PANTHER)[["release"]] <- # nolint
     }
 
 
-
 ## Updated 2023-09-25.
 .PANTHER.drosophilaMelanogaster <- # nolint
     function(data) {
@@ -248,7 +244,6 @@ formals(PANTHER)[["release"]] <- # nolint
         )
         data
     }
-
 
 
 ## Updated 2023-10-06.
@@ -293,7 +288,6 @@ formals(PANTHER)[["release"]] <- # nolint
         ## Bind and return.
         do.call(what = rbind, args = list(ensembl, hgnc))
     }
-
 
 
 ## Updated 2023-09-25.

@@ -6,7 +6,6 @@
 NULL
 
 
-
 ## Updated 2019-07-22.
 `show,PANTHER` <- # nolint
     function(object) {
@@ -17,7 +16,6 @@ NULL
             genes = object[["geneId"]]
         ))
     }
-
 
 
 #' @rdname show

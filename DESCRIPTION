@@ -20,25 +20,25 @@ URL:
 BugReports: https://github.com/acidgenomics/r-panther/issues/
 License: AGPL-3
 Encoding: UTF-8
-Depends: R (>= 4.3)
+Depends: R (>= 4.0)
 Imports:
-    AcidBase (>= 0.7.0),
-    AcidCLI (>= 0.3.0),
-    AcidGenerics (>= 0.7.3),
-    AcidGenomes (>= 0.6.0),
-    AcidPlyr (>= 0.5.0),
-    BiocGenerics (>= 0.46.0),
-    IRanges (>= 2.34.0),
-    S4Vectors (>= 0.38.0),
-    goalie (>= 0.7.3),
-    pipette (>= 0.14.1),
-    syntactic (>= 0.7.0),
+    AcidBase,
+    AcidCLI,
+    AcidGenerics,
+    AcidGenomes,
+    AcidPlyr,
+    BiocGenerics,
+    IRanges,
+    S4Vectors,
+    goalie,
+    pipette,
+    syntactic,
     methods,
     utils
 Suggests:
-    testthat (>= 3.1.10)
+    testthat
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

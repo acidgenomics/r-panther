@@ -7,12 +7,10 @@
 "_PACKAGE"
 
 
-
 ## S4 classes ==================================================================
 
 #' @importClassesFrom S4Vectors DFrame
 NULL
-
 
 
 ## S4 generics and methods =====================================================
@@ -30,7 +28,6 @@ NULL
 #' @importMethodsFrom pipette decode import
 #' @importMethodsFrom syntactic camelCase
 NULL
-
 
 
 ## Standard functions ==========================================================

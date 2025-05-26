@@ -1,4 +1,13 @@
-# Release notes
+## PANTHER 0.5.1 (2025-05-25)
+
+Maintenance release.
+
+Minor changes:
+
+- Dropped minimum R dependency back to 4.0 for better compatibility on legacy
+  systems, namely Ubuntu 22 LTS.
+- Now using air formatter.
+- Updated lintr checks.
 
 ## PANTHER 0.5.0 (2023-10-06)
 
