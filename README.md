@@ -35,6 +35,6 @@ R
 ```
 
 [bioconda]: https://bioconda.github.io/
-[conda]: https://conda.io/
+[conda]: https://docs.conda.io/
 [panther]: http://www.pantherdb.org/
 [r]: https://www.r-project.org/
