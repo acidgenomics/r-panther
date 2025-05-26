@@ -4,6 +4,7 @@ Maintenance release.
 
 Minor changes:
 
+- Added support for PANTHER 19.0.
 - Dropped minimum R dependency back to 4.0 for better compatibility on legacy
   systems, namely Ubuntu 22 LTS.
 - Now using air formatter.
