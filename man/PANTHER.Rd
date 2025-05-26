@@ -4,7 +4,7 @@
 \alias{PANTHER}
 \title{PANTHER database annotations}
 \usage{
-PANTHER(organism, release = "18.0")
+PANTHER(organism, release = "19.0")
 }
 \arguments{
 \item{organism}{\code{character(1)}.
@@ -23,7 +23,7 @@ server (e.g. \code{"17.0"}).}
 for \strong{P}rotein \strong{AN}alysis \strong{TH}rough \strong{E}volutionary \strong{R}elationships.
 }
 \note{
-Updated 2023-09-25.
+Updated 2025-05-25.
 }
 \section{Suported organisms}{
 
