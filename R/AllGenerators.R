@@ -218,7 +218,7 @@ formals(PANTHER)[["release"]] <- # nolint
     x <- CharacterList(x)
     x <- sort(unique(x))
     x <- gsub(pattern = "#([A-Z0-9:]+)", replacement = " [\\1]", x = x)
-    x <- gsub(pattern = ">", replacement = " > ", x = x)
+    x <- gsub(pattern = ">", replacement = " > ", x = x, fixed = TRUE)
     x
 }
 
