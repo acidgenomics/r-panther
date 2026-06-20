@@ -19,7 +19,7 @@ NULL
 #' @importFrom BiocGenerics do.call lapply rbind sort unique unlist unsplit
 #' @importFrom IRanges gsub
 #' @importFrom S4Vectors complete.cases decode head metadata metadata<- split
-#' tail
+#' @importFrom S4Vectors tail
 #' @importFrom methods show
 #' @importFrom pipette import
 #'
@@ -36,7 +36,7 @@ NULL
 #' @importFrom AcidCLI abort alert alertWarning
 #' @importFrom AcidGenomes Hgnc Mgi
 #' @importFrom goalie assert hasInternet hasLength hasNoDuplicates hasRows
-#' isOrganism isString isSubset validate
+#' @importFrom goalie isOrganism isString isSubset validate
 #' @importFrom IRanges CharacterList SplitDataFrameList
 #' @importFrom S4Vectors DataFrame SimpleList
 #' @importFrom methods as is new setClass setValidity
