@@ -15,7 +15,7 @@ Authors@R: c(
         role = c("cph", "fnd")
     ))
 URL:
-    https://r.acidgenomics.com/packages/panther/,
+    https://r.acidgenomics.com/panther/,
     https://github.com/acidgenomics/r-panther/
 BugReports: https://github.com/acidgenomics/r-panther/issues/
 License: Apache License (>= 2)
